@@ -1,0 +1,6 @@
+{
+  "runtime": "dart-sdk-3.3.0",
+  "mode": "aot",
+  "tree_shake_icons": true,
+  "obfuscate": false
+}

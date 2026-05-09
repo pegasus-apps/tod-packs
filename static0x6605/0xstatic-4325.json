@@ -1,0 +1,6 @@
+{
+  "cache_version": 3,
+  "ttl": 86400,
+  "regions": ["ap-south-1", "us-east-2"],
+  "purge_on_update": true
+}

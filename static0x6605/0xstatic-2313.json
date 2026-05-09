@@ -1,0 +1,6 @@
+{
+  "build": "a3f9c",
+  "target": "arm64-v8a",
+  "flags": ["--release", "--no-sound-null-safety"],
+  "checksum": "e7d2a1b9f04c3e6d"
+}
