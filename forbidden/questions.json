@@ -1,0 +1,381 @@
+{
+    "cards": [
+        {
+            "id": "for_t_001",
+            "type": "truth",
+            "content": "What's the most forbidden thought you've had about someone in this room that you've never acted on?",
+            "level": 3,
+            "topic_tags": [
+                "forbidden",
+                "secrets",
+                "attraction"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "for_t_001_fu",
+                "content": "Why haven't you acted on it?",
+                "trigger_probability": 0.8,
+                "timer_expired_text": null
+            }
+        },
+        {
+            "id": "for_t_002",
+            "type": "truth",
+            "content": "Have you ever been attracted to someone you absolutely shouldn't have been? Who was it, without naming them?",
+            "level": 3,
+            "topic_tags": [
+                "forbidden",
+                "attraction",
+                "secrets"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "for_t_003",
+            "type": "truth",
+            "content": "What's the darkest secret you have that you've never told anyone?",
+            "level": 3,
+            "topic_tags": [
+                "secrets",
+                "dark",
+                "vulnerability"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "for_t_003_fu",
+                "content": "Why have you kept it secret this long?",
+                "trigger_probability": 0.9,
+                "timer_expired_text": null
+            }
+        },
+        {
+            "id": "for_t_004",
+            "type": "truth",
+            "content": "Have you ever done something in a relationship that you know would have ended it if your partner found out?",
+            "level": 3,
+            "topic_tags": [
+                "dark",
+                "relationship",
+                "secrets"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "for_t_005",
+            "type": "truth",
+            "content": "What's a desire you have that you genuinely believe is too taboo to say out loud?",
+            "level": 3,
+            "topic_tags": [
+                "forbidden",
+                "desire",
+                "secrets"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "for_t_005_fu",
+                "content": "Say it. Right now. Out loud.",
+                "trigger_probability": 0.6,
+                "timer_expired_text": null
+            }
+        },
+        {
+            "id": "for_t_006",
+            "type": "truth",
+            "content": "What's the most morally questionable thing you've ever done for someone you were attracted to?",
+            "level": 3,
+            "topic_tags": [
+                "dark",
+                "attraction",
+                "stories"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "for_t_007",
+            "type": "truth",
+            "content": "Is there someone in your life you'd pursue if you had absolutely no consequences to face?",
+            "level": 3,
+            "topic_tags": [
+                "forbidden",
+                "desire",
+                "hypothetical"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "for_t_008",
+            "type": "truth",
+            "content": "What's the most selfish thing you've ever done in a romantic situation?",
+            "level": 3,
+            "topic_tags": [
+                "dark",
+                "relationship",
+                "honesty"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "for_t_008_fu",
+                "content": "Would you do it again?",
+                "trigger_probability": 0.7,
+                "timer_expired_text": null
+            }
+        },
+        {
+            "id": "for_t_009",
+            "type": "truth",
+            "content": "Have you ever been in a situation where you had the chance to cross a line you knew you shouldn't — and did you?",
+            "level": 3,
+            "topic_tags": [
+                "forbidden",
+                "honesty",
+                "stories"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "for_t_010",
+            "type": "truth",
+            "content": "What's one thing about yourself — romantically or physically — that you've never told another person?",
+            "level": 3,
+            "topic_tags": [
+                "secrets",
+                "vulnerability",
+                "intimate"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "for_t_010_fu",
+                "content": "The group decides if they believe you.",
+                "trigger_probability": 0.5,
+                "timer_expired_text": null
+            }
+        },
+        {
+            "id": "for_d_001",
+            "type": "dare",
+            "content": "Pick someone in the room to whisper your biggest secret to — just them. They must keep it forever.",
+            "level": 3,
+            "topic_tags": [
+                "secrets",
+                "trust",
+                "forbidden"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "for_d_001_fu",
+                "content": "The listener must say only this: 'I understand.' Nothing else.",
+                "trigger_probability": 1,
+                "timer_expired_text": null
+            }
+        },
+        {
+            "id": "for_d_002",
+            "type": "dare",
+            "content": "Let the group read through your most recent DMs with someone you're attracted to. Silently.",
+            "level": 3,
+            "topic_tags": [
+                "bold",
+                "digital",
+                "exposure"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "for_d_003",
+            "type": "dare",
+            "content": "Tell the person you find most attractive in the room exactly what you'd do if you had them alone for one night.",
+            "level": 3,
+            "topic_tags": [
+                "bold",
+                "forbidden",
+                "desire"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "for_d_004",
+            "type": "dare",
+            "content": "Let someone unlock your phone and go through your camera roll for 30 seconds — you cannot interfere.",
+            "level": 3,
+            "topic_tags": [
+                "exposure",
+                "bold",
+                "trust"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": 30,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "for_d_004_fu",
+                "content": "They must describe one thing they found — without naming it directly.",
+                "trigger_probability": 0.8,
+                "timer_expired_text": "Phone goes back — no questions asked.",
+                "vibe": "intense"
+            }
+        },
+        {
+            "id": "for_d_005",
+            "type": "dare",
+            "content": "Confess something to one person in this room that you've been holding back for weeks, months, or years.",
+            "level": 3,
+            "topic_tags": [
+                "forbidden",
+                "vulnerability",
+                "honesty"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "for_d_006",
+            "type": "dare",
+            "content": "Call someone you have unresolved feelings for and say exactly three words — whatever three words you want. Right now.",
+            "level": 3,
+            "topic_tags": [
+                "bold",
+                "phone",
+                "forbidden"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": 60,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "for_d_006_fu",
+                "content": "What were the three words and why those?",
+                "trigger_probability": 1,
+                "timer_expired_text": "Time's up — call or skip, your call."
+            }
+        },
+        {
+            "id": "for_d_007",
+            "type": "dare",
+            "content": "Stand up, face the group, and say the one thing you're most ashamed of — out loud, in full.",
+            "level": 3,
+            "topic_tags": [
+                "dark",
+                "vulnerability",
+                "honesty"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "for_d_007_fu",
+                "content": "The group responds with one word each — no explanations.",
+                "trigger_probability": 0.7,
+                "timer_expired_text": null
+            }
+        },
+        {
+            "id": "for_d_008",
+            "type": "dare",
+            "content": "Write your most forbidden thought about someone in this room on a piece of paper, fold it, and hand it to them. They read it alone.",
+            "level": 3,
+            "topic_tags": [
+                "forbidden",
+                "written",
+                "intimate"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "for_d_008_fu",
+                "content": "They must nod once if they already knew. That's all.",
+                "trigger_probability": 0.9,
+                "timer_expired_text": null
+            }
+        },
+        {
+            "id": "for_d_009",
+            "type": "dare",
+            "content": "Delete one conversation from your phone that you'd be most embarrassed for others to see — right now, in front of everyone.",
+            "level": 3,
+            "topic_tags": [
+                "exposure",
+                "bold",
+                "digital"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "for_d_010",
+            "type": "dare",
+            "content": "Look the person you're most drawn to in the room directly in the eyes and without breaking contact, say: 'There's something I've been hiding from you.' Then say what it is.",
+            "level": 3,
+            "topic_tags": [
+                "forbidden",
+                "eye contact",
+                "honesty",
+                "vulnerability"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "for_d_010_fu",
+                "content": "They may ask one follow-up question. You must answer honestly.",
+                "trigger_probability": 1,
+                "timer_expired_text": null
+            }
+        }
+    ]
+}

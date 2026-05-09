@@ -1,0 +1,337 @@
+{
+    "cards": [
+        {
+            "id": "nau_t_001",
+            "type": "truth",
+            "content": "What's the most attractive thing someone can do without even trying?",
+            "level": 1,
+            "topic_tags": [
+                "attraction",
+                "flirty"
+            ],
+            "repeatable": true,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "nau_t_002",
+            "type": "truth",
+            "content": "Have you ever had a dream about someone in this room? What happened?",
+            "level": 2,
+            "topic_tags": [
+                "dreams",
+                "attraction",
+                "flirty"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "nau_t_002_fu",
+                "content": "Don't leave out the details.",
+                "trigger_probability": 0.7,
+                "timer_expired_text": null
+            }
+        },
+        {
+            "id": "nau_t_003",
+            "type": "truth",
+            "content": "What's the most flirtatious text you've ever sent? Read it out loud.",
+            "level": 2,
+            "topic_tags": [
+                "flirty",
+                "digital",
+                "fun"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "nau_t_004",
+            "type": "truth",
+            "content": "What part of your body do you think is your best feature — and why?",
+            "level": 1,
+            "topic_tags": [
+                "body",
+                "confidence",
+                "flirty"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "nau_t_005",
+            "type": "truth",
+            "content": "What's the boldest move you've ever made on someone you were attracted to?",
+            "level": 2,
+            "topic_tags": [
+                "bold",
+                "attraction",
+                "stories"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "nau_t_006",
+            "type": "truth",
+            "content": "What's your biggest turn-on that most people wouldn't expect?",
+            "level": 3,
+            "topic_tags": [
+                "attraction",
+                "secrets",
+                "flirty"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "nau_t_007",
+            "type": "truth",
+            "content": "Have you ever been caught checking someone out? What happened after?",
+            "level": 2,
+            "topic_tags": [
+                "embarrassing",
+                "attraction",
+                "fun"
+            ],
+            "repeatable": true,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "nau_t_008",
+            "type": "truth",
+            "content": "What outfit of mine do you find the most attractive?",
+            "level": 1,
+            "topic_tags": [
+                "attraction",
+                "fashion",
+                "flirty"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "nau_t_009",
+            "type": "truth",
+            "content": "What's a situation where you found yourself unexpectedly attracted to someone?",
+            "level": 2,
+            "topic_tags": [
+                "attraction",
+                "stories"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "nau_t_010",
+            "type": "truth",
+            "content": "If you could kiss anyone in this room right now, would you? And how would you do it?",
+            "level": 3,
+            "topic_tags": [
+                "flirty",
+                "bold",
+                "physical"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "nau_t_010_fu",
+                "content": "Okay, now prove it.",
+                "trigger_probability": 0.4,
+                "timer_expired_text": null
+            }
+        },
+        {
+            "id": "nau_d_001",
+            "type": "dare",
+            "content": "Do your best flirtatious wink at the person to your left. Hold eye contact for 5 seconds after.",
+            "level": 1,
+            "topic_tags": [
+                "flirty",
+                "eye contact",
+                "fun"
+            ],
+            "repeatable": true,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "nau_d_002",
+            "type": "dare",
+            "content": "Send the most flirtatious text you can think of to someone in this room right now — and show us the message before sending.",
+            "level": 2,
+            "topic_tags": [
+                "flirty",
+                "digital",
+                "bold"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": 30,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "nau_d_003",
+            "type": "dare",
+            "content": "Give the person to your right the most convincing 'bedroom eyes' you can manage for 15 seconds.",
+            "level": 2,
+            "topic_tags": [
+                "flirty",
+                "eye contact",
+                "fun"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": 15,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "nau_d_003_fu",
+                "content": "Rate each other's effort out of 10.",
+                "trigger_probability": 0.6,
+                "timer_expired_text": "Time — and scene.",
+                "vibe": "funny"
+            }
+        },
+        {
+            "id": "nau_d_004",
+            "type": "dare",
+            "content": "Whisper the cheesiest pickup line you know into the ear of the person closest to you.",
+            "level": 1,
+            "topic_tags": [
+                "flirty",
+                "funny",
+                "bold"
+            ],
+            "repeatable": true,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "nau_d_005",
+            "type": "dare",
+            "content": "Give someone in the room a 30-second shoulder massage. Make it count.",
+            "level": 2,
+            "topic_tags": [
+                "physical touch",
+                "flirty"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": 30,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "nau_d_006",
+            "type": "dare",
+            "content": "Do your most confident runway walk across the room and back. Own it.",
+            "level": 1,
+            "topic_tags": [
+                "confidence",
+                "fun",
+                "body"
+            ],
+            "repeatable": true,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "nau_d_007",
+            "type": "dare",
+            "content": "Describe — in detail — what your ideal first kiss would look like. Then recreate the setting as best you can right now.",
+            "level": 3,
+            "topic_tags": [
+                "fantasy",
+                "bold",
+                "physical"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "nau_d_008",
+            "type": "dare",
+            "content": "Let someone in the room change your phone wallpaper to whatever they want for the rest of the night.",
+            "level": 2,
+            "topic_tags": [
+                "fun",
+                "bold",
+                "digital"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "nau_d_009",
+            "type": "dare",
+            "content": "Do your best impression of someone flirting badly. Everyone votes if they'd still go on a date with you.",
+            "level": 1,
+            "topic_tags": [
+                "funny",
+                "flirty",
+                "performance"
+            ],
+            "repeatable": true,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "nau_d_010",
+            "type": "dare",
+            "content": "Sit on someone's lap for the next two turns of the game.",
+            "level": 3,
+            "topic_tags": [
+                "physical touch",
+                "bold",
+                "fun"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        }
+    ]
+}

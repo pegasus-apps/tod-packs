@@ -1,0 +1,355 @@
+{
+    "cards": [
+        {
+            "id": "spi_t_001",
+            "type": "truth",
+            "content": "What's the most intimate thing you've done with someone you barely knew?",
+            "level": 3,
+            "topic_tags": [
+                "intimate",
+                "stories",
+                "bold"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "spi_t_001_fu",
+                "content": "Do you regret it, or would you do it again?",
+                "trigger_probability": 0.7,
+                "timer_expired_text": null
+            }
+        },
+        {
+            "id": "spi_t_002",
+            "type": "truth",
+            "content": "What's something you find irresistible about the opposite sex that you'd be embarrassed to admit?",
+            "level": 2,
+            "topic_tags": [
+                "attraction",
+                "secrets",
+                "gender"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "spi_t_003",
+            "type": "truth",
+            "content": "What's the most daring place you've ever kissed someone?",
+            "level": 3,
+            "topic_tags": [
+                "bold",
+                "kissing",
+                "stories"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "spi_t_004",
+            "type": "truth",
+            "content": "What body part on your partner do you find most attractive, and why?",
+            "level": 2,
+            "topic_tags": [
+                "attraction",
+                "body",
+                "intimate"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "spi_t_005",
+            "type": "truth",
+            "content": "Have you ever done something in the heat of the moment that you'd never admit to in everyday life?",
+            "level": 3,
+            "topic_tags": [
+                "secrets",
+                "bold",
+                "stories"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "spi_t_005_fu",
+                "content": "Admit it now. Full story, full detail.",
+                "trigger_probability": 0.5,
+                "timer_expired_text": null
+            }
+        },
+        {
+            "id": "spi_t_006",
+            "type": "truth",
+            "content": "What's the most revealing outfit you've ever worn on a date, and what was the reaction?",
+            "level": 2,
+            "topic_tags": [
+                "fashion",
+                "bold",
+                "stories"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "spi_t_007",
+            "type": "truth",
+            "content": "Rate everyone in the room by physical attractiveness. Be honest.",
+            "level": 3,
+            "topic_tags": [
+                "attraction",
+                "bold",
+                "group"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "spi_t_008",
+            "type": "truth",
+            "content": "What's the longest you've gone without physical affection, and how did it affect you?",
+            "level": 2,
+            "topic_tags": [
+                "intimate",
+                "emotional",
+                "vulnerability"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "spi_t_009",
+            "type": "truth",
+            "content": "What's one thing you've always wanted someone to do to you but never asked for?",
+            "level": 3,
+            "topic_tags": [
+                "desire",
+                "vulnerability",
+                "intimate"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "spi_t_010",
+            "type": "truth",
+            "content": "What's the most risqué thing you've ever done in public?",
+            "level": 3,
+            "topic_tags": [
+                "bold",
+                "public",
+                "stories"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "spi_t_010_fu",
+                "content": "Would you do it again — right now?",
+                "trigger_probability": 0.4,
+                "timer_expired_text": null
+            }
+        },
+        {
+            "id": "spi_d_001",
+            "type": "dare",
+            "content": "Give someone in the room a 10-second kiss on the cheek, starting from the ear. Slow.",
+            "level": 3,
+            "topic_tags": [
+                "physical touch",
+                "bold",
+                "intimate"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": 10,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "spi_d_002",
+            "type": "dare",
+            "content": "Let the group pick one item of your clothing for you to remove for the next 3 rounds.",
+            "level": 3,
+            "topic_tags": [
+                "bold",
+                "group",
+                "physical"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "spi_d_003",
+            "type": "dare",
+            "content": "Give the most attractive person in the room a 30-second back massage — without saying a word.",
+            "level": 2,
+            "topic_tags": [
+                "physical touch",
+                "intimate",
+                "silence"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": 30,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "spi_d_003_fu",
+                "content": "How was that on a scale of 1-10 — both of you answer.",
+                "trigger_probability": 0.8,
+                "timer_expired_text": "Time's up — fingers off."
+            }
+        },
+        {
+            "id": "spi_d_004",
+            "type": "dare",
+            "content": "Demonstrate — on someone willing — how you would make the perfect first move.",
+            "level": 3,
+            "topic_tags": [
+                "bold",
+                "physical",
+                "flirty"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "spi_d_005",
+            "type": "dare",
+            "content": "Take a photo together in the most romantic pose you can think of — it has to be someone's new profile picture for 24 hours.",
+            "level": 2,
+            "topic_tags": [
+                "bold",
+                "photo",
+                "fun"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "spi_d_006",
+            "type": "dare",
+            "content": "Bite your lip and hold eye contact with the person across from you until one of you breaks. No smiling.",
+            "level": 2,
+            "topic_tags": [
+                "eye contact",
+                "bold",
+                "tension"
+            ],
+            "repeatable": true,
+            "gender": "any",
+            "timer_seconds": 30,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "spi_d_006_fu",
+                "content": "Who broke first? They owe the other person a dare of their choosing.",
+                "trigger_probability": 1,
+                "timer_expired_text": "It's a tie — decide among yourselves."
+            }
+        },
+        {
+            "id": "spi_d_007",
+            "type": "dare",
+            "content": "Recreate the most passionate scene from your favorite movie using whoever is willing in the room.",
+            "level": 3,
+            "topic_tags": [
+                "performance",
+                "bold",
+                "fun"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "spi_d_008",
+            "type": "dare",
+            "content": "Trace a word on someone's arm with your finger, slowly, and they have to guess what it says.",
+            "level": 2,
+            "topic_tags": [
+                "physical touch",
+                "intimate",
+                "fun"
+            ],
+            "repeatable": true,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "spi_d_009",
+            "type": "dare",
+            "content": "Let someone blindfold you for 60 seconds. The group decides what happens — within reason.",
+            "level": 3,
+            "topic_tags": [
+                "bold",
+                "trust",
+                "group"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": 60,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "spi_d_009_fu",
+                "content": "What were you scared they would do? What did you hope they would do?",
+                "trigger_probability": 0.9,
+                "timer_expired_text": "Blindfold comes off — reveal time.",
+                "vibe": "shy"
+            }
+        },
+        {
+            "id": "spi_d_010",
+            "type": "dare",
+            "content": "Do a 60-second couples dance with someone — as close as you dare.",
+            "level": 2,
+            "topic_tags": [
+                "physical touch",
+                "dance",
+                "bold"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": 60,
+            "auto_start_timer": false,
+            "follow_up": null
+        }
+    ]
+}

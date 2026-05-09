@@ -1,0 +1,245 @@
+{
+    "cards": [
+        {
+            "id": "rom_test_name_001",
+            "type": "truth",
+            "content": "{player}, tell {partner} one thing you love about them that you've never said out loud.",
+            "level": 1,
+            "topic_tags": [
+                "connection",
+                "feelings"
+            ],
+            "repeatable": true,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "rom_test_name_002",
+            "type": "dare",
+            "content": "Look {partner} in the eyes and say exactly why you chose {him/her} — no skipping, {player}.",
+            "level": 1,
+            "topic_tags": [
+                "connection",
+                "vulnerability"
+            ],
+            "repeatable": true,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "rom_test_name_003",
+            "type": "truth",
+            "content": "{nickname}, what's the one memory with {partner} you replay the most?",
+            "level": 1,
+            "topic_tags": [
+                "nostalgia",
+                "connection"
+            ],
+            "repeatable": true,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "rom_test_name_003_fu",
+                "content": "{partner.nickname}, did that memory mean as much to you as it did to {player}?",
+                "trigger_probability": 1.0,
+                "timer_expired_text": "Time's up — answer with your eyes.",
+                "vibe": "love"
+            }
+        },
+        {
+            "id": "rom_test_name_004",
+            "type": "dare",
+            "content": "{player} and {partner} — hold hands right now and don't let go until this card is done.",
+            "level": 1,
+            "topic_tags": [
+                "physical touch",
+                "connection"
+            ],
+            "repeatable": true,
+            "gender": "any",
+            "timer_seconds": 30,
+            "auto_start_timer": true,
+            "follow_up": null
+        },
+        {
+            "id": "rom_d_001",
+            "type": "dare",
+            "content": "Hold my hand, look me in the eyes, and say three things you genuinely love about me — no laughing allowed.",
+            "level": 1,
+            "topic_tags": [
+                "affection",
+                "eye contact",
+                "words of affirmation"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": 60,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "rom_d_002",
+            "type": "dare",
+            "content": "Write me a two-sentence love note right now and read it aloud.",
+            "level": 1,
+            "topic_tags": [
+                "writing",
+                "affection"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": 90,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "rom_d_003",
+            "type": "dare",
+            "content": "Give me the longest hug you've ever given anyone. Hold it until the timer ends.",
+            "level": 1,
+            "topic_tags": [
+                "physical touch",
+                "affection"
+            ],
+            "repeatable": true,
+            "gender": "any",
+            "timer_seconds": 30,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "rom_d_003_fu",
+                "content": "How did that feel? Did it change anything between us in this moment?",
+                "trigger_probability": 0.5,
+                "timer_expired_text": "Time's up — slowly let go.",
+                "vibe": "funny"
+            }
+        },
+        {
+            "id": "rom_d_004",
+            "type": "dare",
+            "content": "Serenade me with any song — even if you can only hum it. Make it feel like you mean it.",
+            "level": 2,
+            "topic_tags": [
+                "music",
+                "vulnerability",
+                "fun"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "rom_d_005",
+            "type": "dare",
+            "content": "Send me a voice note right now saying something you've never said to me before.",
+            "level": 3,
+            "topic_tags": [
+                "vulnerability",
+                "openness",
+                "digital"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "rom_d_006",
+            "type": "dare",
+            "content": "Slow dance with me for 60 seconds — no music needed, just us.",
+            "level": 2,
+            "topic_tags": [
+                "physical touch",
+                "romance",
+                "fun"
+            ],
+            "repeatable": true,
+            "gender": "any",
+            "timer_seconds": 60,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "rom_d_006_fu",
+                "content": "What were you thinking about during that dance?",
+                "trigger_probability": 0.6,
+                "timer_expired_text": "Time to stop — or not.",
+                "vibe": "funny"
+            }
+        },
+        {
+            "id": "rom_d_007",
+            "type": "dare",
+            "content": "Look me in the eyes for 60 seconds without breaking eye contact or speaking.",
+            "level": 2,
+            "topic_tags": [
+                "eye contact",
+                "connection",
+                "silence"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": 60,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "rom_d_007_fu",
+                "content": "What did you see in my eyes?",
+                "trigger_probability": 0.8,
+                "timer_expired_text": "Time's up — you can blink now.",
+                "vibe": "funny"
+            }
+        },
+        {
+            "id": "rom_d_008",
+            "type": "dare",
+            "content": "Plan our dream date out loud — destination, food, time of day, every detail — right now.",
+            "level": 1,
+            "topic_tags": [
+                "fantasy",
+                "planning",
+                "connection"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "rom_d_009",
+            "type": "dare",
+            "content": "Give me a compliment for every finger on one hand — five genuine ones, no repeats.",
+            "level": 1,
+            "topic_tags": [
+                "words of affirmation",
+                "affection"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "rom_d_010",
+            "type": "dare",
+            "content": "Give me a forehead kiss, then tell me what you were feeling in that exact moment.",
+            "level": 2,
+            "topic_tags": [
+                "physical touch",
+                "vulnerability",
+                "affection"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        }
+    ]
+}
