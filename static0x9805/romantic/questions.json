@@ -344,6 +344,28 @@
                 "timer_expired_text": null,
                 "vibe": "love"
             }
+        },
+        {
+            "id": "rom_d_016",
+            "type": "truth",
+            "content": "{player}, what's something {partner} has never had to say out loud — but you already know they feel it?",
+            "level": 3,
+            "topic_tags": [
+                "vulnerability",
+                "emotional intimacy",
+                "feelings"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "rom_d_016_fu",
+                "content": "{partner}, is {player} right?",
+                "trigger_probability": 1.0,
+                "timer_expired_text": null,
+                "vibe": "love"
+            }
         }
     ]
 }
