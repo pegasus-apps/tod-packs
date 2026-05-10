@@ -1,4 +1,4 @@
-# Bracr — Master Build Plan
+# Bracer — Master Build Plan
 > Define your structure. Fill your content. Export your JSON.
 
 A free, open-source cross-platform tool for creating and managing structured JSON content packs. Built for indie app developers, game makers, and content creators who need a clean UI to manage JSON-driven content without touching code.
@@ -20,7 +20,7 @@ A free, open-source cross-platform tool for creating and managing structured JSO
 ## 1. Product Vision
 
 ### What It Is
-Bracr is a schema-first JSON content editor. Users define the structure of their data once, then fill it in with a clean form UI — no code required. Think of it as a lightweight CMS you own entirely, with no backend, no database, and no subscription.
+Bracer is a schema-first JSON content editor. Users define the structure of their data once, then fill it in with a clean form UI — no code required. Think of it as a lightweight CMS you own entirely, with no backend, no database, and no subscription.
 
 ### Who It's For
 - Mobile/indie app developers who store content in JSON packs (card games, quiz apps, flashcard apps)
@@ -91,7 +91,7 @@ Each list field has its own sub-schema (the shape of each item in the array).
 **Layout:**
 ```
 ┌─────────────────────────────────────────────────┐
-│  Bracr                        [+ New Project]│
+│  Bracer                        [+ New Project]│
 │                                                 │
 │  ┌───────────────┐   ┌───────────────┐          │
 │  │ 🃏 Couple Game │   │ 💬 Chat Tool  │          │
@@ -329,7 +329,7 @@ After detection, fields appear pre-filled in the schema editor. User confirms ty
 
 **Drive folder structure:**
 ```
-Bracr/
+Bracer/
 ├── Couple Game/
 │   ├── project.meta.json
 │   ├── schemas/
@@ -383,7 +383,7 @@ Bracr/
 ### Step 1 — Create GitHub Repository
 
 1. Go to github.com → New Repository
-2. Name it: `bracr`
+2. Name it: `bracer`
 3. Description: `Schema-first JSON content editor for indie developers and content creators`
 4. Set to **Public**
 5. Add README: **Yes**
@@ -394,8 +394,8 @@ Bracr/
 ### Step 2 — Clone Locally
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/bracr.git
-cd bracr
+git clone https://github.com/YOUR_USERNAME/bracer.git
+cd bracer
 ```
 
 ### Step 3 — Create Folder Structure
@@ -406,7 +406,7 @@ mkdir -p apps/web apps/desktop packages/core docs
 
 Your repo structure will be:
 ```
-bracr/
+bracer/
 ├── apps/
 │   ├── web/          ← React + Vite web app (also PWA)
 │   └── desktop/      ← Tauri wrapper
@@ -433,13 +433,13 @@ npx tailwindcss init -p
 ### Step 5 — Set Up Google Cloud Project (for Drive)
 
 1. Go to console.cloud.google.com
-2. New Project → Name: `Bracr`
+2. New Project → Name: `Bracer`
 3. Enable APIs:
    - Google Drive API
    - Google Picker API
 4. Create OAuth 2.0 credentials:
    - Application type: Web application
-   - Authorized origins: `http://localhost:5173`, `https://bracr.vercel.app`
+   - Authorized origins: `http://localhost:5173`, `https://bracer.vercel.app`
 5. Save your `CLIENT_ID` — you'll need it later
 6. Create `.env` file in `apps/web/`:
 ```
@@ -482,7 +482,7 @@ git push origin main
 *Tag: Architecture + Design System*
 
 ```
-You are building Bracr — a schema-first JSON content editor built with React 18, TypeScript, Vite, Tailwind CSS, and Zustand.
+You are building Bracer — a schema-first JSON content editor built with React 18, TypeScript, Vite, Tailwind CSS, and Zustand.
 
 Be concise. No lengthy explanations. Output code only with brief inline comments where needed.
 
@@ -543,7 +543,7 @@ Install react-router-dom if not present.
 ```
 Be concise. Output types only.
 
-Create packages/core/src/types.ts with all TypeScript types for Bracr.
+Create packages/core/src/types.ts with all TypeScript types for Bracer.
 
 Types needed:
 
@@ -629,7 +629,7 @@ Also create:
 *Tag: Project Dashboard UI*
 
 ```
-Build the Bracr Project Dashboard page for a React + TypeScript + Tailwind app.
+Build the Bracer Project Dashboard page for a React + TypeScript + Tailwind app.
 
 File: apps/web/src/pages/ProjectDashboard.tsx
 
@@ -640,7 +640,7 @@ Use these existing UI components: Card, Button, Badge from components/ui/
 Use the Project type from packages/core/src/types.ts
 
 Layout:
-- Top bar: "Bracr" logo left, "[+ New Project]" button right
+- Top bar: "Bracer" logo left, "[+ New Project]" button right
 - Project grid: responsive 1-col mobile, 2-col tablet, 3-col desktop
 - Each project card shows: name, schema count, total entry count, sync status badge, last modified time
 - Sync status badge colors: green=synced, blue=syncing, yellow=conflict, gray=local, red=error
@@ -673,7 +673,7 @@ Keep it clean. No lorem ipsum. Use realistic project names like "Couple Card Gam
 ```
 Be concise. Code only.
 
-Create the main Zustand store for Bracr.
+Create the main Zustand store for Bracer.
 
 File: apps/web/src/store/projectStore.ts
 
@@ -725,7 +725,7 @@ Wire up ProjectDashboard.tsx to use this store instead of mock data.
 ```
 Be concise. Code only.
 
-Build the Schema Editor page for Bracr.
+Build the Schema Editor page for Bracer.
 
 File: apps/web/src/pages/SchemaEditor.tsx
 
@@ -775,7 +775,7 @@ Install @dnd-kit/core and @dnd-kit/sortable.
 *Tag: Schema Editor Polish*
 
 ```
-Polish the SchemaEditor.tsx in the Bracr React app.
+Polish the SchemaEditor.tsx in the Bracer React app.
 
 Current state: functional but plain. Make it feel professional.
 
@@ -811,7 +811,7 @@ Dark mode must work throughout.
 ```
 Be concise. Code only.
 
-Build the Content Editor page for Bracr.
+Build the Content Editor page for Bracer.
 
 File: apps/web/src/pages/ContentEditor.tsx
 
@@ -872,7 +872,7 @@ Wire up to projectStore for all data operations.
 *Tag: Content Editor Polish + Mobile*
 
 ```
-Polish ContentEditor.tsx in the Bracr React app.
+Polish ContentEditor.tsx in the Bracer React app.
 
 Improvements:
 1. The ADD ENTRY section: give it a subtle top border in accent color, section label "ADD ENTRY" in small caps muted text
@@ -904,12 +904,12 @@ Preserve all existing logic.
 *Tag: Project View Page*
 
 ```
-Build the Project View page for Bracr.
+Build the Project View page for Bracer.
 
 File: apps/web/src/pages/ProjectView.tsx
 
 Layout:
-- Top bar: back arrow + "Bracr" | Project name (editable on click) | version badge "v4" | sync status badge
+- Top bar: back arrow + "Bracer" | Project name (editable on click) | version badge "v4" | sync status badge
 - Section: "SCHEMAS" header
 - Schema cards grid (2 col desktop, 1 col mobile):
   Each card: schema name, entry count, [Open] button → /project/:id/content/:schemaId, [Edit Schema] button → /project/:id/schema/:schemaId
@@ -950,7 +950,7 @@ Dark mode. Clean, professional.
 ```
 Be concise. Code only.
 
-Implement Google OAuth and Drive API integration for Bracr.
+Implement Google OAuth and Drive API integration for Bracer.
 
 Files to create:
 - packages/core/src/driveService.ts
@@ -976,8 +976,8 @@ driveService.ts:
 
 useDriveSync.ts:
 - syncProject(project: Project): Promise<void>
-  1. Ensure Bracr/ root folder exists in Drive
-  2. Ensure Bracr/ProjectName/ folder exists
+  1. Ensure Bracer/ root folder exists in Drive
+  2. Ensure Bracer/ProjectName/ folder exists
   3. Upload project.meta.json
   4. Ensure schemas/ and content/ subfolders exist
   5. Upload each schema as schemas/schemaname.schema.json
@@ -1017,7 +1017,7 @@ All Drive operations should update project syncStatus in the store before and af
 *Tag: Sync UI Components*
 
 ```
-Build sync-related UI components for Bracr.
+Build sync-related UI components for Bracer.
 
 Files:
 - apps/web/src/components/SyncStatusBadge.tsx
@@ -1067,13 +1067,13 @@ Integrate DriveAuthStrip into ProjectDashboard.
 *Tag: PWA Setup + Mobile Navigation*
 
 ```
-Configure Bracr as a Progressive Web App and add mobile navigation.
+Configure Bracer as a Progressive Web App and add mobile navigation.
 
 1. PWA setup (Vite PWA plugin):
    Install: pnpm add -D vite-plugin-pwa
    Configure in vite.config.ts:
-   - name: "Bracr"
-   - short_name: "Bracr"
+   - name: "Bracer"
+   - short_name: "Bracer"
    - theme_color: "#6366f1" (indigo-500)
    - icons: generate placeholder icons at 192x192 and 512x512 (simple "PF" text on indigo background as SVG)
    - Cache strategy: StaleWhileRevalidate for assets
@@ -1100,7 +1100,7 @@ Configure Bracr as a Progressive Web App and add mobile navigation.
 4. Add "Add to Home Screen" prompt handling:
    Listen for beforeinstallprompt event
    Show a subtle banner after user has used the app for 2+ sessions:
-   "Install Bracr for offline access" [Install] [Not now]
+   "Install Bracer for offline access" [Install] [Not now]
 ```
 
 ---
@@ -1118,7 +1118,7 @@ Configure Bracr as a Progressive Web App and add mobile navigation.
 ```
 Be concise.
 
-Audit the entire Bracr app for dark mode consistency and theme issues.
+Audit the entire Bracer app for dark mode consistency and theme issues.
 
 Go through every component and page file. For each:
 1. Ensure all background colors use CSS variables or Tailwind dark: variants — no hardcoded colors
@@ -1157,7 +1157,7 @@ Output a list of files changed and what was fixed. Then output the corrected cod
 ```
 Be concise. Code only.
 
-Set up Tauri v2 for the Bracr desktop app.
+Set up Tauri v2 for the Bracer desktop app.
 
 Working directory: apps/desktop/
 
@@ -1166,10 +1166,10 @@ Working directory: apps/desktop/
    Then configure src-tauri/tauri.conf.json to use the built web app.
 
 2. Configure tauri.conf.json:
-   - productName: "Bracr"
+   - productName: "Bracer"
    - version: "0.1.0"
-   - identifier: "com.bracr.app"
-   - windows: title "Bracr", width 1200, height 800, minWidth 800, minHeight 600
+   - identifier: "com.bracer.app"
+   - windows: title "Bracer", width 1200, height 800, minWidth 800, minHeight 600
    - allowlist: fs (all), dialog (all), shell (open)
 
 3. Add Tauri file system commands in src-tauri/src/main.rs:
@@ -1205,11 +1205,11 @@ The web app should work identically in browser and desktop — fileService abstr
 *Tag: Desktop App Window Polish*
 
 ```
-Add desktop-specific polish to the Bracr Tauri app.
+Add desktop-specific polish to the Bracer Tauri app.
 
 1. Custom titlebar (apps/web/src/components/TitleBar.tsx):
    Show only when running in Tauri (check window.__TAURI__)
-   - Draggable area with app name "Bracr" centered
+   - Draggable area with app name "Bracer" centered
    - Window controls (minimize, maximize, close) on right — call Tauri window API
    - Left side: current project name if inside a project
    - Height: 40px, background: --bg-secondary
@@ -1227,7 +1227,7 @@ Add desktop-specific polish to the Bracr Tauri app.
    File menu: New Project, Open Project, Export JSON, separator, Quit
    Edit menu: standard (handled by OS)
    View menu: Toggle Dark Mode, Toggle Sidebar
-   Help menu: About Bracr, GitHub, Buy Me a Coffee
+   Help menu: About Bracer, GitHub, Buy Me a Coffee
 ```
 
 ---
@@ -1281,7 +1281,7 @@ Output fixed functions and test file.
 *Tag: Empty States, Loading States, Error States*
 
 ```
-Add proper empty, loading, and error states throughout the Bracr app.
+Add proper empty, loading, and error states throughout the Bracer app.
 
 1. Empty states (use a consistent EmptyState component):
    File: apps/web/src/components/EmptyState.tsx
@@ -1326,18 +1326,18 @@ Use lucide-react for icons (pnpm add lucide-react).
 *Tag: Buy Me a Coffee + About + Branding*
 
 ```
-Add final branding and attribution to Bracr.
+Add final branding and attribution to Bracer.
 
 1. Update Settings page About section:
    - App version pulled from package.json (import { version } from '../../../package.json')
    - GitHub repo link: opens in browser (use Tauri shell.open on desktop, window.open on web)
    - Buy Me a Coffee button: styled in yellow (#FFDD00), coffee cup emoji, text "Buy me a coffee"
      Link: https://buymeacoffee.com (user will update with their own link)
-   - Tagline: "Bracr is free and open source. If it saves you time, a coffee keeps it going. ☕"
+   - Tagline: "Bracer is free and open source. If it saves you time, a coffee keeps it going. ☕"
    - Built with: React, Tauri, TypeScript
 
 2. App logo:
-   Create a simple SVG logo for Bracr:
+   Create a simple SVG logo for Bracer:
    - "PF" monogram or a simple box/pack icon
    - Indigo (#6366f1) primary color
    - Works on light and dark backgrounds
@@ -1345,14 +1345,14 @@ Add final branding and attribution to Bracr.
    - Use in top bar of dashboard and desktop titlebar
 
 3. Footer on web app only (not desktop):
-   Minimal: "Bracr · Open Source · Buy me a coffee ☕ · GitHub"
+   Minimal: "Bracer · Open Source · Buy me a coffee ☕ · GitHub"
    Muted text, centered, very small
 
 4. Update page <title> tags:
-   - Dashboard: "Bracr"
-   - Project: "ProjectName — Bracr"
-   - Schema Editor: "Edit Schema — Bracr"
-   - Content Editor: "SchemaName — Bracr"
+   - Dashboard: "Bracer"
+   - Project: "ProjectName — Bracer"
+   - Schema Editor: "Edit Schema — Bracer"
+   - Content Editor: "SchemaName — Bracer"
 ```
 
 ---
@@ -1373,7 +1373,7 @@ Add final branding and attribution to Bracr.
 ```
 Be concise.
 
-Set up GitHub Actions CI/CD for Bracr.
+Set up GitHub Actions CI/CD for Bracer.
 
 File: .github/workflows/deploy.yml
 
@@ -1434,7 +1434,7 @@ GitHub Actions will build installers for Mac, Windows, Linux and attach them to 
 ### Before First Public Release
 
 - [ ] Web app deployed to Vercel and accessible
-- [ ] Custom domain set up (optional: bracr.app or bracr.vercel.app)
+- [ ] Custom domain set up (optional: bracer.app or bracer.vercel.app)
 - [ ] Desktop builds tested on Mac and Windows
 - [ ] Google OAuth consent screen verified (add your production domain)
 - [ ] All unit tests passing
@@ -1462,7 +1462,7 @@ GitHub Actions will build installers for Mac, Windows, Linux and attach them to 
 ### Root README.md
 
 ```markdown
-# Bracr
+# Bracer
 
 > Schema-first JSON content editor for indie developers and content creators.
 
@@ -1470,17 +1470,17 @@ Define your data structure once. Fill it in with a clean form. Export perfect JS
 
 **No backend. No subscription. No lock-in.**
 
-[Try it free →](https://bracr.vercel.app) · [Download desktop app](https://github.com/YOUR_USERNAME/bracr/releases) · [Buy me a coffee ☕](https://buymeacoffee.com/YOUR_LINK)
+[Try it free →](https://bracer.vercel.app) · [Download desktop app](https://github.com/YOUR_USERNAME/bracer/releases) · [Buy me a coffee ☕](https://buymeacoffee.com/YOUR_LINK)
 
 ---
 
-## What is Bracr?
+## What is Bracer?
 
-If your app or game runs on JSON data packs — card games, quiz apps, flashcard sets, dialogue trees, item databases — Bracr gives you and your team a clean UI to create and manage that content without touching code.
+If your app or game runs on JSON data packs — card games, quiz apps, flashcard sets, dialogue trees, item databases — Bracer gives you and your team a clean UI to create and manage that content without touching code.
 
 ## Features
 
-- **Schema-first** — define your JSON structure visually or paste an example and let Bracr detect it
+- **Schema-first** — define your JSON structure visually or paste an example and let Bracer detect it
 - **Fast content entry** — conveyor belt form: fill, save, instantly ready for the next entry
 - **Google Drive sync** — optional. Save your projects to Drive and access them from any device
 - **Works everywhere** — web app, desktop app (Mac/Windows/Linux), mobile browser PWA
@@ -1490,15 +1490,15 @@ If your app or game runs on JSON data packs — card games, quiz apps, flashcard
 ## Getting Started
 
 ### Web App
-Visit [bracr.vercel.app](https://bracr.vercel.app) — no install needed.
+Visit [bracer.vercel.app](https://bracer.vercel.app) — no install needed.
 
 ### Desktop App
-Download the latest release for your platform from [Releases](https://github.com/YOUR_USERNAME/bracr/releases).
+Download the latest release for your platform from [Releases](https://github.com/YOUR_USERNAME/bracer/releases).
 
 ### Self-host
 ```bash
-git clone https://github.com/YOUR_USERNAME/bracr.git
-cd bracr/apps/web
+git clone https://github.com/YOUR_USERNAME/bracer.git
+cd bracer/apps/web
 pnpm install && pnpm dev
 ```
 
@@ -1523,7 +1523,7 @@ MIT © [Your Name]
 ### apps/web/README.md
 
 ```markdown
-# Bracr — Web App
+# Bracer — Web App
 
 React 18 + TypeScript + Vite + Tailwind CSS + Zustand
 
@@ -1553,7 +1553,7 @@ pnpm build
 ### apps/desktop/README.md
 
 ```markdown
-# Bracr — Desktop App
+# Bracer — Desktop App
 
 Tauri v2 wrapper around the web app.
 
@@ -1584,5 +1584,5 @@ pnpm tauri build
 
 ---
 
-*Bracr Master Plan — v1.0*
+*Bracer Master Plan — v1.0*
 *Keep it simple. Keep it fast. Ship it.*
