@@ -34,7 +34,7 @@ Bracer is a schema-first JSON content editor. Users define the structure of thei
 - **No lock-in** — everything is a plain JSON file the user owns
 
 ### What It Does NOT Do
-- No user accounts or cloud database
+- No user accounts or cloud database (sync is through the user's own Drive or GitHub)
 - No real-time collaboration
 - No AI generation (planned for later)
 - No backend of any kind
@@ -91,7 +91,7 @@ Each list field has its own sub-schema (the shape of each item in the array).
 **Layout:**
 ```
 ┌─────────────────────────────────────────────────┐
-│  Bracer                        [+ New Project]│
+│  Bracer                           [+ New Project]│
 │                                                 │
 │  ┌───────────────┐   ┌───────────────┐          │
 │  │ 🃏 Couple Game │   │ 💬 Chat Tool  │          │
@@ -104,16 +104,17 @@ Each list field has its own sub-schema (the shape of each item in the array).
 │  └───────────────┘   └───────────────┘          │
 │                                                 │
 │  ──────────────────────────────────────────     │
-│  [Sign in with Google — enable Drive sync]      │
-│  Continue without account →                     │
+│  [Connect Google Drive]  [Connect GitHub]       │
+│  or  Continue without account →                 │
 └─────────────────────────────────────────────────┘
 ```
 
 **Rules:**
-- Google sign-in is optional and equal in weight to guest mode — no guilt-tripping
+- Both sync options are optional and equal in weight — no guilt-tripping
+- User can connect Drive, GitHub, both, or neither
 - Sync status shown on every card: `● Synced`, `↑ Syncing`, `⚠ Conflict`, `○ Local only`, `✕ Sync error`
+- Each project card shows which sync backend it uses (Drive icon or GitHub icon)
 - Guest users see subtle persistent reminder: *"Export your JSON regularly to avoid data loss"*
-- Clicking a project card navigates into it immediately
 - Right-click / long-press on project card: Rename, Duplicate, Delete, Export all
 
 ---
@@ -173,34 +174,28 @@ Each list field has its own sub-schema (the shape of each item in the array).
 │                                                 │
 │  ROOT FIELDS  (metadata, set once)              │
 │  ┌──────────────────────────────────────────┐   │
-│  │ pack_id     [Short Text ▾]  [Required ✓] │   │
-│  │ name        [Short Text ▾]  [Required ✓] │   │
-│  │ description [Long Text  ▾]  [Required  ] │   │
-│  │ ads_required[Number     ▾]  [Required  ] │   │
-│  │                              [× delete]  │   │
+│  │ ⠿ pack_id     [Short Text ▾]  [Req ✓] × │   │
+│  │ ⠿ name        [Short Text ▾]  [Req ✓] × │   │
+│  │ ⠿ description [Long Text  ▾]  [Req  ] × │   │
+│  │ ⠿ ads_required[Number     ▾]  [Req  ] × │   │
 │  └──────────────────────────────────────────┘   │
 │  [+ Add Root Field]                             │
 │                                                 │
 │  LIST FIELDS  (arrays you'll add items to)      │
 │  ┌──────────────────────────────────────────┐   │
-│  │ cards  →  [Define card shape ▾]          │   │
-│  │                                          │   │
-│  │   id           [Short Text  ▾] [Req ✓]  │   │
-│  │   type         [Dropdown    ▾] [Req ✓]  │   │
-│  │               Options: truth, dare       │   │
-│  │               [+ add option]             │   │
-│  │   content      [Long Text   ▾] [Req ✓]  │   │
-│  │   level        [Number      ▾] [Req ✓]  │   │
-│  │   topic_tags   [Tags        ▾]           │   │
-│  │   repeatable   [Toggle      ▾]           │   │
-│  │   gender       [Dropdown    ▾]           │   │
-│  │               Options: any, male, female │   │
-│  │   timer_seconds[Number Null ▾]           │   │
-│  │   follow_up    [Object Opt. ▾]           │   │
-│  │     └── id          [Short Text ▾]      │   │
+│  │ cards  →  [Define card shape]            │   │
+│  │   ⠿ id           [Short Text  ▾] [Req ✓]│   │
+│  │   ⠿ type         [Dropdown    ▾] [Req ✓]│   │
+│  │              Options: truth, dare        │   │
+│  │              [+ add option]              │   │
+│  │   ⠿ content      [Long Text   ▾] [Req ✓]│   │
+│  │   ⠿ level        [Number      ▾] [Req ✓]│   │
+│  │   ⠿ topic_tags   [Tags        ▾]         │   │
+│  │   ⠿ repeatable   [Toggle      ▾]         │   │
+│  │   ⠿ timer_seconds[Number Null ▾]         │   │
+│  │   ⠿ follow_up    [Object Opt. ▾]         │   │
 │  │     └── content     [Long Text  ▾]      │   │
 │  │     └── probability [Number     ▾]      │   │
-│  │     └── timer_text  [Short Text ▾]      │   │
 │  └──────────────────────────────────────────┘   │
 │  [+ Add List Field]                             │
 │                                                 │
@@ -209,19 +204,9 @@ Each list field has its own sub-schema (the shape of each item in the array).
 ```
 
 **Path B — Import from example JSON (collapsed by default):**
-```
-  [+ Import from example JSON]
-  ▼ expanded:
-  ┌──────────────────────────────────┐
-  │ Paste one example entry here... │
-  │                                  │
-  │ { "type": "truth", "tier":...   │
-  └──────────────────────────────────┘
-  [Detect Fields →]
-```
-After detection, fields appear pre-filled in the schema editor. User confirms type for each, adds enum options to dropdowns, marks required fields. The example JSON is a **hint only** — user has full control.
+After detection, fields appear pre-filled. User confirms type for each, adds enum options to dropdowns, marks required fields. The example JSON is a **hint only** — user has full control.
 
-**Field detection logic (simple, reliable):**
+**Field detection logic:**
 - `string` with ≤ 5 unique values across sample → suggest Dropdown
 - `string` with avg length > 60 chars → suggest Long Text
 - `string` short → Short Text
@@ -233,7 +218,7 @@ After detection, fields appear pre-filled in the schema editor. User confirms ty
 
 **Rules:**
 - Fields are drag-to-reorder
-- Dropdown fields show inline option editor — type and hit Enter to add options
+- Dropdown fields show inline chip editor — type and hit Enter to add options
 - Object Optional fields expand to show sub-fields inline
 - Schema changes warn user if existing entries will be affected
 - Save is disabled until schema has a name and at least one field
@@ -254,21 +239,14 @@ After detection, fields appear pre-filled in the schema editor. User confirms ty
 │                    ▸ cards                      │
 │                                                 │
 │  ════ ADD ENTRY ══════════════════════════════  │
-│                                                 │
 │  id            [nau_t_033                    ]  │
 │  type          [truth              ▾]           │
 │  content       [                             ]  │
-│                [                             ]  │
-│                [                             ]  │
 │  level         [2    ]                          │
 │  topic_tags    [attraction ×] [flirty ×] [+]   │
 │  repeatable    [✓]                              │
-│  gender        [any                ▾]           │
 │  timer_seconds [null ]                          │
 │  follow_up     [ ] Add follow-up               │
-│                ▼ expanded when toggled:         │
-│                content  [                    ]  │
-│                prob.    [0.7 ]                  │
 │                                                 │
 │  [Save Entry]  ← clears form, stays on screen  │
 │                                                 │
@@ -277,55 +255,36 @@ After detection, fields appear pre-filled in the schema editor. User confirms ty
 │                                                 │
 │  nau_t_001  truth  lv1  What's the most...  ⋮  │
 │  nau_t_002  truth  lv2  Have you ever had.. ⋮  │
-│  nau_t_003  truth  lv2  What's the most fl. ⋮  │
 │                                                 │
-│  [See all entries →]    [Sync with Drive ↑]    │
+│  [See all entries →]    [Sync ↑]               │
 └─────────────────────────────────────────────────┘
 ```
 
 **Critical UX rules:**
-- Form is **always visible at the top** — never hidden behind a sheet or modal
-- [Save Entry] clears the form instantly and stays on screen — conveyor belt pattern
-- The last saved entry **briefly highlights** at the top of the list (300ms flash) as confirmation
-- Clicking an entry in the list opens it **inline for editing** — replaces the add form temporarily, with a [Cancel] to return to add mode
-- Duplicate entry from the ⋮ menu — prefills the form with that entry's data
-- [See all entries] expands the list to full screen for bulk review
-- Context dropdown at top switches between **Pack metadata** (simple field editor) and each **list field** (the add form)
-- Export JSON always available — exports the complete reconstructed JSON
-
-**Importing existing JSON:**
-- Option on content editor: [Import existing JSON]
-- Tool parses file → separates metadata from array fields
-- Shows preview: "Found pack metadata (5 fields). Found 1 list: cards (20 items)"
-- User confirms → existing entries load into the list
-- User continues adding from entry 21 onwards
-- Export concatenates everything correctly
+- Form always visible at the top — never hidden behind a sheet or modal
+- [Save Entry] clears the form instantly — conveyor belt pattern
+- Last saved entry briefly highlights at top of list (300ms flash) as confirmation
+- Clicking an entry in the list opens it inline for editing
+- Context dropdown switches between Pack metadata and each list field
+- Import existing JSON → parses and appends entries to the list
 
 ---
 
-### Sync & Version Model
+### Sync Model — Two Backends
 
-**project.meta.json (stored in Drive folder):**
-```json
-{
-  "name": "Couple Game",
-  "created": "2026-05-10",
-  "lastModified": "2026-05-10T14:32:00Z",
-  "lastModifiedBy": "device-web-chrome",
-  "version": 4,
-  "schemas": ["truth-cards", "dare-cards"]
-}
-```
+Users choose their sync backend per project (or none). The sync interface is identical regardless of backend.
 
-**Conflict resolution (never auto-merge):**
-```
-⚠️  Sync conflict on "Couple Game"
+---
 
-  This device:    Version 4  (edited 2 mins ago)
-  Google Drive:   Version 6  (edited on another device)
+#### Google Drive Sync
 
-  [Keep mine]   [Use Drive version]   [Compare side by side]
-```
+**Best for:** Non-technical users, cross-device access, content teams
+
+**How it works:**
+- Sign in with Google OAuth
+- Bracer creates a `Bracer/` root folder in their Drive
+- Each project = a subfolder with `project.meta.json`, `schemas/`, and `content/`
+- Every save uploads the changed files silently
 
 **Drive folder structure:**
 ```
@@ -339,16 +298,93 @@ Bracer/
 │       ├── truth-cards.json
 │       └── dare-cards.json
 └── Chat Tool/
-    ├── project.meta.json
     └── ...
 ```
 
-**Sync status indicators (always honest):**
-- `● Synced` — "Synced 2 mins ago"
-- `↑ Syncing` — "Uploading..."
-- `⚠ Conflict` — "Edited on 2 devices — tap to resolve"
-- `○ Local only` — "Not connected to Drive"
-- `✕ Error` — "Sync failed — tap to retry"
+---
+
+#### GitHub Sync
+
+**Best for:** Developers, version history, projects where JSON lives in a code repo
+
+**How it works:**
+- Sign in with GitHub OAuth
+- User picks an existing repo (or Bracer creates a new one)
+- User picks a folder path inside that repo (e.g. `content/packs/`)
+- Every save = a commit to that repo with a descriptive message
+- Full history on GitHub — revert to any point
+
+**Commit message format:**
+```
+bracer: add entry to truth-cards (nau_t_033)
+bracer: update schema truth-cards
+bracer: update pack metadata
+```
+
+**GitHub repo structure:**
+```
+your-game-repo/
+└── content/packs/          ← user-chosen folder
+    ├── .bracer/
+    │   └── project.meta.json
+    ├── schemas/
+    │   ├── truth-cards.schema.json
+    │   └── dare-cards.schema.json
+    └── truth-cards.json
+```
+
+**Why this is powerful for developers:**
+- JSON content lives in the same repo as the game/app code
+- Every content change is tracked in Git history alongside code changes
+- Team members can see exactly what content changed and when
+- No separate tool needed — Bracer commits directly into the workflow they already use
+
+**GitHub API used:** GitHub Contents API (REST) — no Git installation required on the user's machine
+
+---
+
+#### Conflict Resolution (same for both backends)
+
+Never auto-merge. Always show the user:
+
+```
+⚠️  Sync conflict on "Couple Game"
+
+  This device:    Version 4  (edited 2 mins ago)
+  Remote:         Version 6  (edited on another device)
+
+  [Keep mine]   [Use remote version]   [Compare side by side]
+```
+
+---
+
+#### Sync Status Indicators
+
+| Status | Display |
+|---|---|
+| `● Synced` | "Synced 2 mins ago" |
+| `↑ Syncing` | "Uploading..." |
+| `⚠ Conflict` | "Edited on 2 devices — tap to resolve" |
+| `○ Local only` | "Not connected to sync" |
+| `✕ Error` | "Sync failed — tap to retry" |
+
+---
+
+### project.meta.json
+
+```json
+{
+  "name": "Couple Game",
+  "created": "2026-05-10",
+  "lastModified": "2026-05-10T14:32:00Z",
+  "lastModifiedBy": "device-web-chrome",
+  "version": 4,
+  "syncBackend": "drive",
+  "schemas": ["truth-cards", "dare-cards"]
+}
+```
+
+`syncBackend` is `"drive"`, `"github"`, or `"local"`.
 
 ---
 
@@ -356,7 +392,7 @@ Bracer/
 - Bottom tab bar: Projects | Recents | Settings
 - Content editor: form on top, list scrolls below — same layout, larger tap targets
 - Schema editor: one field at a time, accordion style
-- Drive sync status in top bar always visible
+- Sync status in top bar always visible
 - Add to home screen as PWA (no App Store needed for v1)
 
 ---
@@ -365,16 +401,26 @@ Bracer/
 
 | Layer | Choice | Reason |
 |---|---|---|
-| Framework | React 18 + Vite | Fast, great ecosystem, easy to wrap |
-| Styling | Tailwind CSS | Utility-first, consistent, fast to build |
+| Framework | React 18 + Vite | Fast, great ecosystem |
+| Styling | Tailwind CSS | Utility-first, consistent |
 | State | Zustand | Lightweight, no boilerplate |
 | Local storage | localStorage + IndexedDB | localStorage for settings, IndexedDB for content |
-| Desktop | Tauri v2 | Same React code, 5MB app vs 150MB Electron |
-| Drive API | Google Drive API v3 + Picker API | Free, well documented |
-| Auth | Google OAuth 2.0 | Only for Drive — guest mode needs nothing |
+| Desktop | **Tauri v2** | Same React code, ~5MB app vs ~150MB Electron, fast, no Chromium bloat |
+| Drive sync | Google Drive API v3 + Picker API | Free, well documented |
+| GitHub sync | GitHub Contents API (REST) | No Git required, free, full history |
+| Auth | Google OAuth 2.0 + GitHub OAuth | Separate flows, separate scopes |
 | Deploy (web) | Vercel | Free forever at this scale |
 | Package manager | pnpm | Faster than npm |
 | Language | TypeScript | Catch schema shape errors early |
+
+### Why Tauri over Electron
+
+- **App size:** ~5MB (Tauri) vs ~150MB (Electron)
+- **Memory:** Tauri uses the OS webview — no bundled Chromium
+- **Speed:** Opens faster, uses less RAM
+- **Cost:** You don't need to write Rust — Tauri handles everything, you write React
+- **Only downside:** Rust must be installed on your dev machine, and compile times are slower
+- **Verdict:** Worth it. A 5MB download signals quality. Users notice.
 
 ---
 
@@ -404,18 +450,18 @@ cd bracer
 mkdir -p apps/web apps/desktop packages/core docs
 ```
 
-Your repo structure will be:
+Your repo structure:
 ```
 bracer/
 ├── apps/
 │   ├── web/          ← React + Vite web app (also PWA)
 │   └── desktop/      ← Tauri wrapper
 ├── packages/
-│   └── core/         ← Shared logic (schema parser, JSON builder, Drive API)
-├── docs/             ← Documentation
+│   └── core/         ← Shared logic (schema parser, JSON builder, sync services)
+├── docs/
 ├── .github/
-│   └── workflows/    ← CI/CD
-├── PACKFORGE_MASTER_PLAN.md
+│   └── workflows/
+├── BRACER_MASTER_PLAN.md
 └── README.md
 ```
 
@@ -426,27 +472,44 @@ cd apps/web
 pnpm create vite . --template react-ts
 pnpm install
 pnpm add -D tailwindcss postcss autoprefixer
-pnpm add zustand
+pnpm add zustand react-router-dom
 npx tailwindcss init -p
 ```
 
 ### Step 5 — Set Up Google Cloud Project (for Drive)
 
-1. Go to console.cloud.google.com
-2. New Project → Name: `Bracer`
-3. Enable APIs:
-   - Google Drive API
-   - Google Picker API
-4. Create OAuth 2.0 credentials:
-   - Application type: Web application
-   - Authorized origins: `http://localhost:5173`, `https://bracer.vercel.app`
-5. Save your `CLIENT_ID` — you'll need it later
-6. Create `.env` file in `apps/web/`:
+1. Go to console.cloud.google.com → New Project → Name: `Bracer`
+2. Enable: Google Drive API, Google Picker API
+3. Create OAuth 2.0 credentials → Web application
+4. Authorized origins: `http://localhost:5173`, `https://bracer.vercel.app`
+5. Save your `CLIENT_ID`
+
+### Step 6 — Set Up GitHub OAuth App (for GitHub sync)
+
+1. Go to github.com → Settings → Developer settings → OAuth Apps → New OAuth App
+2. Name: `Bracer`
+3. Homepage URL: `https://bracer.vercel.app`
+4. Authorization callback URL: `https://bracer.vercel.app/auth/github/callback`
+5. Save your `Client ID` and `Client Secret`
+6. Note: GitHub OAuth requires a backend for the token exchange step (client secret cannot be in frontend). Use a Vercel serverless function for this — one endpoint only.
+
+### Step 7 — Environment Variables
+
+Create `apps/web/.env`:
 ```
-VITE_GOOGLE_CLIENT_ID=your_client_id_here
+VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
+VITE_GITHUB_CLIENT_ID=your_github_oauth_client_id
+VITE_GITHUB_REDIRECT_URI=http://localhost:5173/auth/github/callback
 ```
 
-### Step 6 — Initial Commit
+Create `apps/web/.env.production`:
+```
+VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
+VITE_GITHUB_CLIENT_ID=your_github_oauth_client_id
+VITE_GITHUB_REDIRECT_URI=https://bracer.vercel.app/auth/github/callback
+```
+
+### Step 8 — Initial Commit
 
 ```bash
 cd ../../
@@ -462,342 +525,43 @@ git push origin main
 ---
 
 > **How to use these prompts:**
-> - Instructions marked `[YOU]` are things you do manually
-> - Prompts marked `🤖 CLAUDE — CRITICAL` go to Claude (hard logic, architecture, core systems)
-> - Prompts marked `🤖 GEMINI — BUILD` go to Gemini (building UI around established patterns)
-> - After each prompt: test it, then `git commit` before moving to the next
-> - Claude prompts include a note to be concise to save tokens
+> - `[YOU]` — manual steps you do yourself
+> - `🤖 CLAUDE — CRITICAL` — hard logic, architecture, core systems. **Start prompt with "Be concise. No lengthy explanations. Output code only."** to save tokens
+> - `🤖 GEMINI — BUILD` — UI construction built around Claude's foundations
+> - After each prompt: test, then `git commit` before moving on
+> - ✅ = completed
 
 ---
 
-### PHASE 1 — Foundation & Design System
+### PHASE 1 — Foundation & Design System ✅
+
+#### Prompt 1.1 🤖 CLAUDE — CRITICAL ✅
+Design system, Tailwind config, base UI components, ThemeProvider, App router, base Zustand store.
+
+#### Prompt 1.2 🤖 CLAUDE — CRITICAL ✅
+Core TypeScript types, schemaInference.ts, jsonBuilder.ts in packages/core.
 
 ---
 
-**[YOU]** Make sure you are inside `apps/web/` before starting Phase 1.
+### PHASE 2 — Project Dashboard ✅
 
----
+#### Prompt 2.1 🤖 GEMINI — BUILD ✅
+Project dashboard UI with mock data, project cards, sync status badges, Google auth strip.
 
-#### Prompt 1.1 🤖 CLAUDE — CRITICAL
-*Tag: Architecture + Design System*
-
-```
-You are building Bracer — a schema-first JSON content editor built with React 18, TypeScript, Vite, Tailwind CSS, and Zustand.
-
-Be concise. No lengthy explanations. Output code only with brief inline comments where needed.
-
-Set up the following:
-
-1. Tailwind config with this design system:
-   - Colors: slate scale for neutrals, indigo-500 as accent
-   - Dark mode: class-based
-   - Custom font: Inter (UI), JetBrains Mono (code/JSON)
-   - Custom border radius: sm=4px, md=8px, lg=12px
-
-2. Global CSS with CSS variables for both light and dark theme:
-   --bg-primary, --bg-secondary, --bg-tertiary
-   --text-primary, --text-secondary, --text-muted
-   --border, --border-subtle
-   --accent, --accent-hover
-   --success, --warning, --error
-
-3. Base component files (unstyled logic only, styled with Tailwind):
-   - components/ui/Button.tsx (variants: primary, secondary, ghost, danger)
-   - components/ui/Input.tsx (short text input)
-   - components/ui/Textarea.tsx
-   - components/ui/Toggle.tsx (boolean switch)
-   - components/ui/Dropdown.tsx (select with custom options)
-   - components/ui/TagInput.tsx (add/remove string tags)
-   - components/ui/Badge.tsx (status indicators)
-   - components/ui/Card.tsx (container with hover state)
-
-4. ThemeProvider.tsx that reads system preference and allows manual toggle. Persists to localStorage.
-
-5. App.tsx with a basic router (react-router-dom v6):
-   - / → ProjectDashboard (placeholder)
-   - /project/:id → ProjectView (placeholder)
-   - /project/:id/schema/:schemaId → SchemaEditor (placeholder)
-   - /project/:id/content/:schemaId → ContentEditor (placeholder)
-
-6. Zustand store: store/appStore.ts
-   - currentTheme: 'light' | 'dark'
-   - isGoogleAuthed: boolean
-   - googleUser: { name, email, avatar } | null
-
-Install react-router-dom if not present.
-```
-
----
-
-**[YOU]** After Claude responds:
-- Copy code into your project
-- Run `pnpm dev` — confirm app loads with no errors
-- Confirm dark/light toggle works
-- `git commit -m "feat: design system and base components"`
-
----
-
-#### Prompt 1.2 🤖 CLAUDE — CRITICAL
-*Tag: Core TypeScript Types*
-
-```
-Be concise. Output types only.
-
-Create packages/core/src/types.ts with all TypeScript types for Bracer.
-
-Types needed:
-
-FieldType = 'short-text' | 'long-text' | 'number' | 'number-nullable' | 'toggle' | 'dropdown' | 'tags' | 'object-optional' | 'list'
-
-SchemaField {
-  id: string
-  name: string        // the JSON key name
-  label: string       // display label
-  type: FieldType
-  required: boolean
-  options?: string[]  // for dropdown type
-  subFields?: SchemaField[]  // for object-optional and list types
-}
-
-Schema {
-  id: string
-  name: string
-  rootFields: SchemaField[]   // metadata fields (set once)
-  listFields: SchemaField[]   // array fields (add items to)
-}
-
-Entry = Record<string, any>   // a single content item
-
-ContentList {
-  schemaId: string
-  listFieldName: string   // e.g. "cards"
-  entries: Entry[]
-}
-
-Project {
-  id: string
-  name: string
-  created: string       // ISO date
-  lastModified: string  // ISO datetime
-  lastModifiedBy: string
-  version: number
-  schemas: Schema[]
-  contentLists: ContentList[]
-  syncStatus: 'synced' | 'syncing' | 'conflict' | 'local' | 'error'
-  driveFolder?: string
-}
-
-AppState {
-  projects: Project[]
-  activeProjectId: string | null
-  activeSchemaId: string | null
-}
-
-Also create:
-- packages/core/src/schemaInference.ts
-  Function: inferSchemaFromJSON(json: Record<string, any>, sampleEntries?: Record<string, any>[]): Schema
-  Logic:
-  - Top-level non-array fields → rootFields
-  - Top-level array-of-objects fields → listFields (with sub-fields inferred)
-  - string with ≤5 unique values in samples → dropdown suggestion
-  - string avg length >60 → long-text
-  - null or object → object-optional
-  - array of strings → tags
-  - boolean → toggle
-  - number → number (check if any sample has null → number-nullable)
-
-- packages/core/src/jsonBuilder.ts
-  Function: buildJSON(project: Project, schemaId: string): Record<string, any>
-  Reconstructs the exact original JSON shape from project data.
-  Root metadata fields go at top level.
-  List fields become arrays of entries.
-```
-
----
-
-**[YOU]**
-- Copy into `packages/core/src/`
-- `git commit -m "feat: core types and schema inference logic"`
-
----
-
-### PHASE 2 — Project Dashboard
-
----
-
-#### Prompt 2.1 🤖 GEMINI — BUILD
-*Tag: Project Dashboard UI*
-
-```
-Build the Bracer Project Dashboard page for a React + TypeScript + Tailwind app.
-
-File: apps/web/src/pages/ProjectDashboard.tsx
-
-Design: Clean, card-based. Neutral slate background. Indigo accent. Supports dark mode via Tailwind dark: classes.
-
-Use these existing UI components: Card, Button, Badge from components/ui/
-
-Use the Project type from packages/core/src/types.ts
-
-Layout:
-- Top bar: "Bracer" logo left, "[+ New Project]" button right
-- Project grid: responsive 1-col mobile, 2-col tablet, 3-col desktop
-- Each project card shows: name, schema count, total entry count, sync status badge, last modified time
-- Sync status badge colors: green=synced, blue=syncing, yellow=conflict, gray=local, red=error
-- Bottom of page: Google sign-in strip (if not authed) OR user avatar + "Connected to Drive" (if authed)
-- Empty state: centered illustration placeholder + "Create your first project" button
-
-Interactions:
-- Click card → navigate to /project/:id
-- Right-click card → context menu: Rename, Duplicate, Delete, Export
-- [+ New Project] → opens inline modal with just a name input and [Create] button
-
-Use mock data for 2-3 projects. No real store needed yet — use useState with mock data.
-
-Keep it clean. No lorem ipsum. Use realistic project names like "Couple Card Game" and "Quiz App".
-```
-
----
-
-**[YOU]**
-- Copy into project
-- `pnpm dev` and review in browser
-- Check mobile view (browser devtools)
-- `git commit -m "feat: project dashboard UI"`
-
----
-
-#### Prompt 2.2 🤖 CLAUDE — CRITICAL
-*Tag: Zustand Store + LocalStorage Persistence*
-
-```
-Be concise. Code only.
-
-Create the main Zustand store for Bracer.
-
-File: apps/web/src/store/projectStore.ts
-
-Use zustand with persist middleware (localStorage).
-
-State:
-- projects: Project[]
-- activeProjectId: string | null
-
-Actions:
-- createProject(name: string): Project
-- updateProject(id: string, updates: Partial<Project>): void
-- deleteProject(id: string): void
-- duplicateProject(id: string): Project
-- addSchema(projectId: string, schema: Schema): void
-- updateSchema(projectId: string, schemaId: string, updates: Partial<Schema>): void
-- deleteSchema(projectId: string, schemaId: string): void
-- copySchema(fromProjectId: string, fromSchemaId: string, toProjectId: string, newName: string): Schema
-- addEntry(projectId: string, schemaId: string, listFieldName: string, entry: Entry): void
-- updateEntry(projectId: string, schemaId: string, listFieldName: string, entryIndex: number, entry: Entry): void
-- deleteEntry(projectId: string, schemaId: string, listFieldName: string, entryIndex: number): void
-- duplicateEntry(projectId: string, schemaId: string, listFieldName: string, entryIndex: number): void
-- setActiveProject(id: string | null): void
-- bumpVersion(projectId: string): void  // increment version + update lastModified
-
-All IDs use crypto.randomUUID().
-createProject sets version=1, created=now, lastModified=now, syncStatus='local'.
-bumpVersion is called automatically inside any action that mutates content.
-
-Wire up ProjectDashboard.tsx to use this store instead of mock data.
-```
-
----
-
-**[YOU]**
-- Apply changes
-- Test: create project, see it persist after page refresh
-- `git commit -m "feat: zustand store with localStorage persistence"`
+#### Prompt 2.2 🤖 CLAUDE — CRITICAL ✅
+Zustand store with localStorage persistence, all project/schema/entry CRUD actions.
 
 ---
 
 ### PHASE 3 — Schema Editor
 
----
-
-#### Prompt 3.1 🤖 CLAUDE — CRITICAL
-*Tag: Schema Editor Core Logic*
-
-```
-Be concise. Code only.
-
-Build the Schema Editor page for Bracer.
-
-File: apps/web/src/pages/SchemaEditor.tsx
-
-This is the most critical screen. It defines the shape of all data.
-
-The editor has two sections:
-1. ROOT FIELDS — metadata fields (SchemaField[] mapped from schema.rootFields)
-2. LIST FIELDS — array fields (SchemaField[] mapped from schema.listFields), each with expandable sub-fields
-
-UI for each field row:
-- Drag handle (left) — use @dnd-kit/core for drag to reorder
-- Field name input (the JSON key)
-- Field type dropdown (all FieldTypes from types.ts)
-- Required toggle
-- Delete button
-- If type === 'dropdown': show inline chip editor for options (type + Enter to add, click × to remove)
-- If type === 'object-optional' or 'list': show expandable sub-fields section (same field row UI, indented)
-
-Import from example JSON (collapsed by default):
-- Collapsible section at top with a textarea
-- [Detect Fields] button calls inferSchemaFromJSON from packages/core
-- Detected fields populate the editor — user then adjusts types and options
-- Show a notice: "Review detected fields below. Change any types or add dropdown options."
-
-Top of page:
-- Back button (← Project name)
-- Schema name input
-- [Save Schema] button (disabled until name + at least 1 field)
-
-On save: call updateSchema from projectStore, navigate back to ProjectView.
-
-Install @dnd-kit/core and @dnd-kit/sortable.
-```
+#### Prompt 3.1 🤖 CLAUDE — CRITICAL ✅
+Schema editor core: drag-to-reorder fields, all field types, dropdown chip editor, object-optional sub-fields, JSON inference integration.
 
 ---
 
-**[YOU]**
-- Apply and test
-- Try: detect fields from pasting the naughty pack JSON sample
-- Try: manually add fields
-- Try: reorder via drag
-- `git commit -m "feat: schema editor with inference and drag reorder"`
-
----
-
-#### Prompt 3.2 🤖 GEMINI — BUILD
-*Tag: Schema Editor Polish*
-
-```
-Polish the SchemaEditor.tsx in the Bracer React app.
-
-Current state: functional but plain. Make it feel professional.
-
-Improvements:
-1. Each field row should be a well-defined card with subtle border and hover highlight
-2. Field type selector should show an icon next to each type name:
-   short-text: Aa, long-text: ¶, number: #, toggle: ◐, dropdown: ▾, tags: ⊞, object-optional: {}, list: []
-3. Dropdown option chips: indigo background, white text, × to remove, clean pill shape
-4. Sub-fields section for object-optional/list: indented with a left border line in accent color
-5. The "Import from example JSON" section: collapsible with smooth animation, has a code-style textarea (monospace font, dark background)
-6. Empty state for ROOT FIELDS and LIST FIELDS sections: dashed border box with [+ Add Field] centered inside
-7. [Save Schema] button: fixed to bottom right of screen, always visible
-
-Keep all existing logic intact. Only change styling and add small UX touches.
-Dark mode must work throughout.
-```
-
----
-
-**[YOU]**
-- Review and adjust if needed
-- `git commit -m "feat: schema editor polish"`
+#### ✅ YOU ARE HERE → Prompt 3.2 🤖 GEMINI — BUILD ✅
+Schema editor polish: field row cards, type icons, dropdown chips, sub-field indentation, collapsible JSON import, empty states, sticky save button.
 
 ---
 
@@ -809,62 +573,63 @@ Dark mode must work throughout.
 *Tag: Content Editor Core — Conveyor Belt Pattern*
 
 ```
-Be concise. Code only.
+Be concise. No lengthy explanations. Output code only.
 
 Build the Content Editor page for Bracer.
 
 File: apps/web/src/pages/ContentEditor.tsx
 
-This is the daily driver screen. The core UX principle: form on top always visible, list below. Save clears form instantly. No sheets or modals.
+Core UX: form on top always visible, list below. Save clears form instantly. No sheets or modals for adding — conveyor belt pattern.
 
 TOP SECTION — Context switcher:
 - Dropdown: "Currently editing: [cards ▾]"
 - Options: "Pack metadata" + each list field name from schema.listFields
-- Switching to "Pack metadata" shows a simple field editor for rootFields values (one input per field)
-- Switching to a list field shows the ADD ENTRY form
+- Pack metadata mode: simple field editor for rootFields values (one input per field, [Save Changes] button)
+- List field mode: shows ADD ENTRY form
 
-ADD ENTRY FORM (when a list field is selected):
-- Render one input per sub-field of the selected list field
-- Input type matches field type:
-  - short-text → Input component
-  - long-text → Textarea component
-  - number / number-nullable → number input (nullable shows "null" placeholder, accepts empty as null)
-  - toggle → Toggle component
-  - dropdown → Dropdown component with the schema's defined options
-  - tags → TagInput component
-  - object-optional → Toggle to enable, expands sub-fields when enabled
-- [Save Entry] button below form
-- On save: call addEntry from store, clear all form fields, focus first field, flash confirmation
+ADD ENTRY FORM:
+- One input per sub-field of the selected list field
+- Input type matches FieldType:
+  - short-text → Input
+  - long-text → Textarea
+  - number → number input
+  - number-nullable → number input (empty = null, show "null" placeholder)
+  - toggle → Toggle
+  - dropdown → Dropdown with schema's defined options
+  - tags → TagInput
+  - object-optional → toggle to enable, expands sub-fields inline when enabled
+- [Save Entry] below form
+- On save: call addEntry from projectStore, clear all fields, focus first field, trigger list flash
 
-ENTRY LIST (below a divider):
-- Search input (filters by any string field value)
-- Filter dropdown (filters by any dropdown field value)
-- Compact list rows: show first 3 fields as preview columns, ⋮ menu on right
-- ⋮ menu: Edit (loads entry into form, replaces add mode), Duplicate, Delete
-- When in edit mode: form title changes to "Edit Entry", shows [Save Changes] and [Cancel] buttons
-- After saving edit: return to add mode, clear form
-- "Last added" entry briefly highlights (300ms, indigo background flash) at top of list after save
-- [Export JSON] button above list: calls buildJSON from packages/core, triggers file download
-- Entry count shown: "32 entries"
+ENTRY LIST:
+- Search input (filters by any string field value, case-insensitive)
+- Filter dropdown (filters by first dropdown field in schema)
+- Compact rows: first 3 fields as preview columns, ⋮ menu right
+- ⋮ menu: Edit, Duplicate, Delete
+- Edit mode: loads entry into the form area (replaces add form), title changes to "Edit Entry", shows [Save Changes] and [Cancel]
+- After save edit: return to add mode, clear form
+- Last added entry: briefly highlight top of list with indigo flash (300ms CSS keyframe animation)
+- Entry count: "32 entries" shown above list
+- [↓ Export JSON] button: calls buildJSON from packages/core, triggers file download named after schema
 
-Import existing JSON:
-- [Import JSON] button near the top
-- User pastes or uploads JSON
-- Tool calls inferSchemaFromJSON, compares to current schema, shows diff
-- If compatible: loads entries into the list (appends, does not overwrite)
-- If incompatible: shows warning with field mismatch details
+IMPORT EXISTING JSON:
+- [↑ Import JSON] button near top
+- User uploads or pastes JSON
+- Calls inferSchemaFromJSON, compares to current schema
+- If compatible: appends entries to existing list (does not overwrite)
+- If incompatible: shows inline warning with field mismatch details
 
-Wire up to projectStore for all data operations.
+Wire all data operations to projectStore.
+Use the Project, Schema, Entry types from packages/core/src/types.ts.
 ```
 
 ---
 
-**[YOU]**
-- Apply and test thoroughly
-- Test: add 5 entries fast — confirm form clears and is ready immediately each time
-- Test: edit an entry from the list
-- Test: export JSON — open file and confirm structure matches original
-- `git commit -m "feat: content editor with conveyor belt UX"`
+**[YOU]** After Prompt 4.1:
+- Add 10 entries fast — confirm form clears instantly each time
+- Edit an entry from the list
+- Export JSON — open file, confirm structure matches your original naughty pack format
+- `git commit -m "feat: content editor core conveyor belt"`
 
 ---
 
@@ -875,24 +640,26 @@ Wire up to projectStore for all data operations.
 Polish ContentEditor.tsx in the Bracer React app.
 
 Improvements:
-1. The ADD ENTRY section: give it a subtle top border in accent color, section label "ADD ENTRY" in small caps muted text
-2. Save button: large, full-width on mobile. Fixed to bottom on mobile screens.
-3. Entry list rows: alternating subtle background, smooth hover highlight, first field bold, others muted
-4. The "last added" flash animation: use a CSS keyframe @keyframes flash { 0%,100%{background:transparent} 50%{background: indigo-100 dark:indigo-900} }
-5. ⋮ context menu: clean floating dropdown, not a browser default
-6. Search and filter bar: sticky below the divider so it stays visible when scrolling the list
+1. ADD ENTRY section: subtle top accent border (indigo), section label "ADD ENTRY" in small-caps muted text above
+2. Save button: large full-width on mobile, fixed to bottom on mobile screens
+3. Entry list rows: alternating subtle background, smooth hover, first field bold, others muted text
+4. Flash animation for last saved entry:
+   @keyframes flashEntry { 0%,100%{background:transparent} 50%{background: indigo-100 / dark:indigo-900} }
+   Apply for 300ms then remove class
+5. ⋮ context menu: custom floating dropdown (not browser default), closes on outside click
+6. Search + filter bar: sticky below divider, always visible when scrolling list
 7. Empty list state: "No entries yet. Add your first one above." centered, muted
-8. Mobile layout: form stacks vertically with larger inputs, list rows show only 2 columns, export button moves to a floating bottom bar
+8. Import JSON section: collapsible, code-style textarea (monospace, dark bg), inline success/error feedback
+9. Mobile: form stacks full width with large inputs, list shows 2 columns only, export button in floating bottom bar
 
-Dark mode throughout.
-Preserve all existing logic.
+Dark mode throughout. Preserve all logic.
 ```
 
 ---
 
-**[YOU]**
-- Review on mobile viewport
-- `git commit -m "feat: content editor mobile polish"`
+**[YOU]** After Prompt 4.2:
+- Test on mobile viewport in browser devtools
+- `git commit -m "feat: content editor polish and mobile"`
 
 ---
 
@@ -909,33 +676,32 @@ Build the Project View page for Bracer.
 File: apps/web/src/pages/ProjectView.tsx
 
 Layout:
-- Top bar: back arrow + "Bracer" | Project name (editable on click) | version badge "v4" | sync status badge
-- Section: "SCHEMAS" header
-- Schema cards grid (2 col desktop, 1 col mobile):
-  Each card: schema name, entry count, [Open] button → /project/:id/content/:schemaId, [Edit Schema] button → /project/:id/schema/:schemaId
-- Below grid: [+ New Schema] button and [Copy from ▾] dropdown
-- Copy from dropdown: grouped list of schemas from this project and other projects. Clicking one opens a small inline dialog: "New schema name: [input] [Create Copy]"
-- Bottom bar: "Export entire project" label + [↓ Download JSON] button
+- Top bar: back arrow + "Bracer" | Project name (click to rename inline) | version badge "v4" | sync status badge
+- Section label: "SCHEMAS"
+- Schema cards grid: 2 col desktop, 1 col mobile
+  Each card: schema name, entry count, [Open] → /project/:id/content/:schemaId, [Edit Schema] → /project/:id/schema/:schemaId
+- Below grid: [+ New Schema] and [Copy from ▾] dropdown
+  Copy from dropdown: grouped — "This project" schemas + "Other projects" schemas
+  On select: inline name input "New schema name: [input] [Create Copy]"
+- Bottom bar: "Export entire project" + [↓ Download JSON]
 
-[+ New Schema] flow:
-- Opens inline (not a modal): a name input appears in the grid as a new card outline
-- User types name, hits Enter or [Create] → navigates to SchemaEditor for that new schema
+[+ New Schema]:
+- Inline in grid: new card outline with name input + [Create] button
+- On create: navigate to SchemaEditor for the new schema
 
 [↓ Download JSON]:
-- Calls buildJSON for every schema in the project
-- Combines into one object: { "schemas": { "truth-cards": {...}, "dare-cards": {...} } }
-- Or alternatively respects each schema's own root shape
+- Calls buildJSON for every schema
+- Merges into: { "project": "name", "schemas": { "truth-cards": {...}, "dare-cards": {...} } }
 - Downloads as projectname.json
 
-Wire to projectStore.
-Use the Project and Schema types.
-Dark mode. Clean, professional.
+Wire to projectStore. Use Project and Schema types. Dark mode. Clean layout.
 ```
 
 ---
 
-**[YOU]**
-- Test full navigation flow: Dashboard → Project → Schema Editor → back → Content Editor → back
+**[YOU]** After Prompt 5.1:
+- Test full navigation: Dashboard → Project → Schema Editor → back → Content Editor → back
+- Test copy schema within project and across projects
 - `git commit -m "feat: project view page"`
 
 ---
@@ -945,289 +711,417 @@ Dark mode. Clean, professional.
 ---
 
 #### Prompt 6.1 🤖 CLAUDE — CRITICAL
-*Tag: Google OAuth + Drive API Integration*
+*Tag: Google Drive Service*
 
 ```
-Be concise. Code only.
+Be concise. No lengthy explanations. Output code only.
 
-Implement Google OAuth and Drive API integration for Bracer.
+Implement Google Drive sync for Bracer.
 
-Files to create:
-- packages/core/src/driveService.ts
+Files:
+- packages/core/src/sync/driveService.ts
 - apps/web/src/hooks/useGoogleAuth.ts
 - apps/web/src/hooks/useDriveSync.ts
 
 driveService.ts:
-- Use Google Drive API v3 (REST, no SDK — use fetch)
-- Functions:
+Use Google Drive API v3 REST (fetch only, no SDK).
+
+Functions:
   initGoogleAuth(clientId: string): Promise<void>
-  signIn(): Promise<GoogleUser>
+  signIn(): Promise<{ name: string, email: string, avatar: string }>
   signOut(): void
   getAccessToken(): string | null
 
-  createFolder(name: string, parentId?: string): Promise<string>  // returns folderId
-  findFolder(name: string, parentId?: string): Promise<string | null>
-  ensureFolder(name: string, parentId?: string): Promise<string>  // find or create
-
+  ensureFolder(name: string, parentId?: string): Promise<string>
   uploadFile(name: string, content: string, folderId: string, existingFileId?: string): Promise<string>
   downloadFile(fileId: string): Promise<string>
   findFile(name: string, folderId: string): Promise<string | null>
   listFiles(folderId: string): Promise<{id: string, name: string, modifiedTime: string}[]>
+  deleteFile(fileId: string): Promise<void>
 
 useDriveSync.ts:
-- syncProject(project: Project): Promise<void>
-  1. Ensure Bracer/ root folder exists in Drive
-  2. Ensure Bracer/ProjectName/ folder exists
+syncProject(project: Project): Promise<void>
+  1. Ensure Bracer/ root folder in Drive
+  2. Ensure Bracer/ProjectName/ folder
   3. Upload project.meta.json
-  4. Ensure schemas/ and content/ subfolders exist
+  4. Ensure schemas/ and content/ subfolders
   5. Upload each schema as schemas/schemaname.schema.json
   6. Upload each content list as content/schemaname.json
-  7. Update project syncStatus to 'synced'
+  7. Update syncStatus to 'synced' in store
 
-- loadProjectFromDrive(projectFolderId: string): Promise<Project>
-  Download and reconstruct a project from Drive files
-
-- checkConflict(project: Project): Promise<boolean>
-  Compare local version with Drive meta version
-  Return true if Drive version > local version
-
-- resolveConflict(project: Project, useLocal: boolean): Promise<void>
+loadProjectFromDrive(projectFolderId: string): Promise<Project>
+checkConflict(project: Project): Promise<boolean>
+  Compare local version with Drive meta version number
+resolveConflict(project: Project, useLocal: boolean): Promise<void>
 
 useGoogleAuth.ts:
-- Wraps driveService auth
-- Returns: { isAuthed, user, signIn, signOut }
-- Persists auth state
+Wraps driveService auth. Returns { isAuthed, user, signIn, signOut }.
+Persists token to localStorage. Handles token expiry.
 
+Update project.meta.json to include syncBackend: 'drive'.
+Update projectStore to call bumpVersion before every sync.
 Load VITE_GOOGLE_CLIENT_ID from env.
-Handle token expiry and refresh.
-All Drive operations should update project syncStatus in the store before and after.
 ```
 
 ---
 
-**[YOU]**
-- This is complex — test carefully
-- Sign in with Google, check Drive for created folders
-- Upload a project, check files appear in Drive
-- `git commit -m "feat: google drive sync integration"`
+**[YOU]** After Prompt 6.1:
+- Sign in, check Drive for Bracer/ folder
+- Save a project, confirm files appear in Drive
+- `git commit -m "feat: google drive sync"`
 
 ---
 
-#### Prompt 6.2 🤖 GEMINI — BUILD
-*Tag: Sync UI Components*
+### PHASE 7 — GitHub Sync
+
+---
+
+#### Prompt 7.1 🤖 CLAUDE — CRITICAL
+*Tag: GitHub OAuth Serverless Function*
 
 ```
-Build sync-related UI components for Bracer.
+Be concise. Output code only.
 
-Files:
-- apps/web/src/components/SyncStatusBadge.tsx
-- apps/web/src/components/ConflictModal.tsx
-- apps/web/src/components/DriveAuthStrip.tsx
+Bracer needs GitHub OAuth. The client secret cannot be in the frontend.
+Create a Vercel serverless function to handle the token exchange.
 
-SyncStatusBadge:
-Props: status ('synced'|'syncing'|'conflict'|'local'|'error'), lastSynced?: string
-- synced: green dot + "Synced X mins ago"
-- syncing: animated blue spinner + "Uploading..."
-- conflict: yellow warning icon + "Conflict — tap to resolve"
-- local: gray circle + "Local only"
-- error: red icon + "Sync failed — tap to retry"
-Clicking conflict or error badges triggers a callback prop.
+File: apps/web/api/github-oauth.ts (Vercel serverless function)
 
-ConflictModal:
-Props: localVersion, driveVersion, localDate, driveDate, onKeepLocal, onUseDrive, onCompare
-- Not a full modal — a prominent banner/card that appears inline
-- Shows both versions with dates
-- Three buttons: [Keep mine] [Use Drive version] [Compare side by side]
-- Compare opens a split view showing both JSONs side by side (use a simple two-column diff display)
+This function:
+- Accepts GET request with ?code=xxx from GitHub OAuth callback
+- Exchanges code for access token using:
+  POST https://github.com/login/oauth/access_token
+  with client_id, client_secret, code
+- Returns { access_token } as JSON
+- Uses env vars: GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET
 
-DriveAuthStrip:
-Props: isAuthed, user, onSignIn, onSignOut
-- Not authed: subtle strip at bottom of Dashboard — "Sign in with Google to sync across devices" + [Connect Google Drive] button
-- Authed: small avatar + email + "Drive connected" + [Disconnect] link
-- Never intrusive — equal visual weight to the guest mode option
+Add to vercel.json (create if needed):
+{
+  "functions": {
+    "api/**": { "runtime": "@vercel/node" }
+  }
+}
 
-Integrate SyncStatusBadge into ProjectDashboard cards and ProjectView top bar.
-Integrate ConflictModal into ProjectView (shown when conflict detected on load).
-Integrate DriveAuthStrip into ProjectDashboard.
-```
+Also create apps/web/src/pages/GitHubCallback.tsx:
+- Route: /auth/github/callback
+- On mount: reads ?code from URL, calls /api/github-oauth, stores access_token in localStorage
+- Shows "Connecting to GitHub..." then redirects to /
+- On error: shows error message with retry
 
----
-
-**[YOU]**
-- Test conflict flow by manually editing version number in Drive meta file
-- `git commit -m "feat: sync UI components"`
-
----
-
-### PHASE 7 — PWA + Responsive Polish
-
----
-
-#### Prompt 7.1 🤖 GEMINI — BUILD
-*Tag: PWA Setup + Mobile Navigation*
-
-```
-Configure Bracer as a Progressive Web App and add mobile navigation.
-
-1. PWA setup (Vite PWA plugin):
-   Install: pnpm add -D vite-plugin-pwa
-   Configure in vite.config.ts:
-   - name: "Bracer"
-   - short_name: "Bracer"
-   - theme_color: "#6366f1" (indigo-500)
-   - icons: generate placeholder icons at 192x192 and 512x512 (simple "PF" text on indigo background as SVG)
-   - Cache strategy: StaleWhileRevalidate for assets
-
-2. Mobile bottom navigation bar:
-   File: apps/web/src/components/MobileNav.tsx
-   Show only on screens < 768px (md breakpoint)
-   Three tabs: 
-   - Projects (home icon) → /
-   - Recents (clock icon) → shows last 3 accessed projects
-   - Settings (gear icon) → /settings
-   Fixed to bottom, safe area inset aware (env(safe-area-inset-bottom))
-   Active tab uses accent color
-
-3. Settings page:
-   File: apps/web/src/pages/Settings.tsx
-   Sections:
-   - Appearance: Light / Dark / System toggle
-   - Account: Google Drive connection status + connect/disconnect
-   - Data: Export all projects as ZIP, Clear all local data (with confirmation)
-   - About: Version number, GitHub link, Buy Me a Coffee link (https://buymeacoffee.com — placeholder)
-   - Credits: "Built by [your name]"
-
-4. Add "Add to Home Screen" prompt handling:
-   Listen for beforeinstallprompt event
-   Show a subtle banner after user has used the app for 2+ sessions:
-   "Install Bracer for offline access" [Install] [Not now]
+Add route in App.tsx: /auth/github/callback → GitHubCallback
 ```
 
 ---
 
-**[YOU]**
-- Test on mobile browser — confirm bottom nav works
-- Test PWA install prompt
-- `git commit -m "feat: PWA and mobile navigation"`
+**[YOU]** After Prompt 7.1:
+- Add `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` to Vercel environment variables
+- Deploy to Vercel, test GitHub OAuth flow end to end
+- `git commit -m "feat: github oauth serverless function"`
 
 ---
 
 #### Prompt 7.2 🤖 CLAUDE — CRITICAL
-*Tag: Dark Mode + Theme Consistency Audit*
+*Tag: GitHub Contents API Sync Service*
 
 ```
-Be concise.
+Be concise. Output code only.
 
-Audit the entire Bracer app for dark mode consistency and theme issues.
+Implement GitHub sync for Bracer using the GitHub Contents API (REST).
 
-Go through every component and page file. For each:
-1. Ensure all background colors use CSS variables or Tailwind dark: variants — no hardcoded colors
-2. Ensure text contrast passes WCAG AA in both modes
-3. Ensure borders, shadows, and dividers adapt correctly
-4. Ensure the JSON preview textarea always uses dark background + light text regardless of theme (it's a code editor)
-5. Ensure sync status badge colors work in both modes (don't rely only on color — add icons too)
+Files:
+- packages/core/src/sync/githubService.ts
+- apps/web/src/hooks/useGitHubAuth.ts
+- apps/web/src/hooks/useGitHubSync.ts
 
-Also:
-- Ensure all focus states are visible (ring style) in both modes
-- Ensure hover states are subtle but visible in dark mode
-- Check the ConflictModal, SyncStatusBadge, DriveAuthStrip components
+githubService.ts:
+All requests use Authorization: Bearer {token} header.
+Base URL: https://api.github.com
 
-Output a list of files changed and what was fixed. Then output the corrected code for each file.
+Functions:
+  getUser(token: string): Promise<{ login: string, name: string, avatar_url: string }>
+
+  listRepos(token: string): Promise<{ name: string, full_name: string, default_branch: string }[]>
+
+  getFile(token: string, repo: string, path: string): Promise<{ content: string, sha: string } | null>
+  // content is base64 encoded — decode it
+
+  createOrUpdateFile(
+    token: string,
+    repo: string,
+    path: string,
+    content: string,      // plain string, function encodes to base64
+    message: string,      // commit message
+    sha?: string          // required for updates, omit for creates
+  ): Promise<{ sha: string }>
+
+  deleteFile(token: string, repo: string, path: string, sha: string, message: string): Promise<void>
+
+  listFolder(token: string, repo: string, path: string): Promise<{ name: string, path: string, sha: string, type: 'file'|'dir' }[]>
+
+useGitHubSync.ts:
+State per project: { repo: string, basePath: string, token: string }
+Store this in project settings (add githubConfig to Project type).
+
+syncProject(project: Project): Promise<void>
+  File paths follow this structure inside the user's chosen repo + basePath:
+    {basePath}/.bracer/project.meta.json
+    {basePath}/schemas/{schemaname}.schema.json
+    {basePath}/{schemaname}.json   ← the actual content, clean export
+  
+  For each file:
+    1. Try getFile to get existing sha
+    2. Call createOrUpdateFile with sha if exists, without if new
+    3. Commit message format: "bracer: sync {project.name} v{version}"
+
+  Update project syncStatus in store.
+
+loadProjectFromGitHub(repo: string, basePath: string, token: string): Promise<Project>
+  Read .bracer/project.meta.json
+  Read all schemas and content files
+  Reconstruct Project object
+
+checkConflict(project: Project): Promise<boolean>
+  Read remote project.meta.json version field
+  Compare to local project.version
+
+resolveConflict(project: Project, useLocal: boolean): Promise<void>
+
+useGitHubAuth.ts:
+Returns { isAuthed, user, token, signIn, signOut }
+signIn: redirects to GitHub OAuth URL with scopes: repo (to read/write repos)
+Stores token from localStorage (set by GitHubCallback page)
+
+Add githubConfig?: { repo: string, basePath: string } to Project type in types.ts.
+```
+
+---
+
+**[YOU]** After Prompt 7.2:
+- Connect GitHub, pick a repo
+- Save a project — check the repo on GitHub for committed files
+- Verify the exported JSON in GitHub matches your original naughty pack format exactly
+- `git commit -m "feat: github sync service"`
+
+---
+
+#### Prompt 7.3 🤖 GEMINI — BUILD
+*Tag: Sync Settings UI + GitHub Repo Picker*
+
+```
+Build sync settings UI for Bracer.
+
+Files:
+- apps/web/src/components/SyncStatusBadge.tsx
+- apps/web/src/components/ConflictBanner.tsx
+- apps/web/src/components/DriveAuthStrip.tsx
+- apps/web/src/components/GitHubSyncSetup.tsx
+
+SyncStatusBadge:
+Props: status, lastSynced?, backend: 'drive'|'github'|'local'
+Shows Drive icon or GitHub icon next to status text.
+Colors: green=synced, blue=syncing, yellow=conflict, gray=local, red=error.
+Always includes icon not just color (accessibility).
+
+ConflictBanner:
+Inline banner (not modal). Shows when conflict detected on project load.
+Props: localVersion, remoteVersion, localDate, remoteDate, backend, onKeepLocal, onUseRemote, onCompare
+[Keep mine] [Use remote] [Compare side by side]
+Compare: side-by-side JSON diff view in a panel below the banner.
+
+DriveAuthStrip:
+Compact strip in Settings and Dashboard.
+Not authed: [Connect Google Drive] button.
+Authed: avatar + email + "Drive connected" + [Disconnect].
+
+GitHubSyncSetup:
+Shown when user connects GitHub to a project for the first time.
+Step 1: "Choose a repository" — searchable dropdown list of their repos
+Step 2: "Choose a folder path" — text input (default: bracer/) with explanation:
+  "Bracer will save your project files here. Use an existing content folder in your repo if you have one."
+Step 3: [Connect] — runs first sync
+
+Also: in ProjectView top bar, show sync backend icon (Drive or GitHub) next to sync status badge.
+In project card on Dashboard, show small Drive/GitHub icon bottom right.
+
+Integrate ConflictBanner into ProjectView (detect conflict on page load, show banner if true).
+```
+
+---
+
+**[YOU]** After Prompt 7.3:
+- Test GitHub repo picker with a real repo
+- Test conflict by manually editing version in GitHub
+- `git commit -m "feat: sync UI components drive and github"`
+
+---
+
+### PHASE 8 — PWA + Responsive Polish
+
+---
+
+#### Prompt 8.1 🤖 GEMINI — BUILD
+*Tag: PWA + Mobile Navigation + Settings*
+
+```
+Configure Bracer as a PWA and add mobile navigation and settings page.
+
+1. PWA (vite-plugin-pwa):
+   Install: pnpm add -D vite-plugin-pwa
+   Configure vite.config.ts:
+   name: "Bracer", short_name: "Bracer"
+   theme_color: "#6366f1"
+   Icons: simple SVG "B" monogram on indigo background, 192x192 and 512x512
+   Cache: StaleWhileRevalidate for assets
+
+2. MobileNav (apps/web/src/components/MobileNav.tsx):
+   Show only on screens < 768px
+   Three tabs: Projects (home icon) / Recents (clock) / Settings (gear)
+   Fixed bottom, safe-area-inset-bottom aware
+   Active tab: accent color
+
+3. Settings page (apps/web/src/pages/Settings.tsx):
+   Sections:
+   - Appearance: Light / Dark / System
+   - Sync: Drive status + connect/disconnect, GitHub status + connect/disconnect
+   - Data: Export all projects as ZIP, Clear all local data (confirm dialog)
+   - About: version from package.json, GitHub link, Buy Me a Coffee button (yellow, ☕)
+     Text: "Bracer is free and open source. If it saves you time, a coffee keeps it going. ☕"
+   - Credits: "Built by [your name]"
+
+4. PWA install prompt:
+   Listen for beforeinstallprompt
+   After 2 sessions: subtle bottom banner "Install Bracer for offline access" [Install] [Not now]
+   Dismiss permanently on "Not now"
+```
+
+---
+
+**[YOU]** After Prompt 8.1:
+- Test on real mobile device
+- `git commit -m "feat: PWA mobile nav and settings"`
+
+---
+
+#### Prompt 8.2 🤖 CLAUDE — CRITICAL
+*Tag: Dark Mode Audit*
+
+```
+Be concise. Output only changed files.
+
+Audit all Bracer components and pages for dark mode consistency.
+
+Check every file. Fix:
+1. All backgrounds use CSS variables or Tailwind dark: — no hardcoded colors
+2. Text contrast passes WCAG AA in both modes
+3. Borders, shadows, dividers adapt correctly
+4. JSON/code textareas always dark bg + light text regardless of theme
+5. Sync status badges use icons not just color
+6. All focus rings visible in both modes
+7. Hover states visible in dark mode (not just color change — use opacity or border)
+
+Output: list of files changed + what was fixed, then corrected code.
 ```
 
 ---
 
 **[YOU]**
-- Toggle theme and review every screen
-- `git commit -m "fix: dark mode consistency audit"`
+- Toggle theme, review every screen
+- `git commit -m "fix: dark mode audit"`
 
 ---
 
-### PHASE 8 — Desktop App (Tauri)
+### PHASE 9 — Desktop App (Tauri)
 
 ---
 
-**[YOU]** Make sure Rust is installed: `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+**[YOU]** Install Rust before starting this phase:
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source ~/.cargo/env
+```
 
 ---
 
-#### Prompt 8.1 🤖 CLAUDE — CRITICAL
-*Tag: Tauri Setup + File System Integration*
+#### Prompt 9.1 🤖 CLAUDE — CRITICAL
+*Tag: Tauri Setup + File System*
 
 ```
-Be concise. Code only.
+Be concise. Output code only.
 
-Set up Tauri v2 for the Bracer desktop app.
+Set up Tauri v2 for Bracer desktop app.
 
 Working directory: apps/desktop/
 
-1. Initialize Tauri in apps/desktop/ pointing to apps/web/ as the frontend:
-   pnpm create tauri-app . --template vanilla
-   Then configure src-tauri/tauri.conf.json to use the built web app.
-
-2. Configure tauri.conf.json:
+1. Initialize Tauri v2 pointing to apps/web/dist as frontend:
+   pnpm add -D @tauri-apps/cli
+   Configure src-tauri/tauri.conf.json:
    - productName: "Bracer"
    - version: "0.1.0"
    - identifier: "com.bracer.app"
-   - windows: title "Bracer", width 1200, height 800, minWidth 800, minHeight 600
-   - allowlist: fs (all), dialog (all), shell (open)
+   - window: title "Bracer", width 1200, height 800, minWidth 800, minHeight 600
+   - build: frontendDist pointing to ../../web/dist
 
-3. Add Tauri file system commands in src-tauri/src/main.rs:
-   - save_file(path: String, content: String) → saves JSON to local file system
-   - open_file(path: String) → reads and returns file content
-   - pick_save_path(default_name: String) → opens save dialog, returns chosen path
-   - pick_open_path() → opens file picker, returns chosen path
+2. Tauri commands in src-tauri/src/main.rs:
+   save_file(path: String, content: String) → Result<(), String>
+   read_file(path: String) → Result<String, String>
+   pick_save_path(default_name: String) → Result<String, String>  // save dialog
+   pick_open_path() → Result<String, String>  // open file dialog
 
-4. Create apps/web/src/services/fileService.ts:
-   - Detects if running in Tauri (window.__TAURI__ exists) or browser
-   - exportJSON(filename: string, content: string):
-     - Tauri: use pick_save_path + save_file commands
-     - Browser: create blob URL + click download link
-   - importJSON():
-     - Tauri: use pick_open_path + open_file commands
-     - Browser: create hidden file input + read FileReader
+3. apps/web/src/services/fileService.ts:
+   Detects Tauri: typeof window.__TAURI__ !== 'undefined'
 
-5. Replace all direct download/upload logic in ContentEditor and ProjectView with fileService calls.
+   exportJSON(filename: string, content: string): Promise<void>
+     Tauri: pick_save_path(filename) → save_file(path, content)
+     Browser: blob URL download
 
-The web app should work identically in browser and desktop — fileService abstracts the difference.
+   importJSON(): Promise<string | null>
+     Tauri: pick_open_path() → read_file(path)
+     Browser: hidden file input + FileReader
+
+4. Replace all download/upload file logic in ContentEditor and ProjectView with fileService calls.
+
+Add to apps/desktop/package.json build scripts:
+  "tauri:dev": "tauri dev"
+  "tauri:build": "tauri build"
 ```
 
 ---
 
-**[YOU]**
-- `cd apps/desktop && pnpm tauri dev`
-- Test export JSON from desktop app — confirm save dialog appears
-- `git commit -m "feat: tauri desktop wrapper with file system integration"`
+**[YOU]** After Prompt 9.1:
+```bash
+cd apps/web && pnpm build
+cd ../desktop && pnpm tauri dev
+```
+- Test export JSON from desktop — confirm save dialog appears
+- `git commit -m "feat: tauri desktop app"`
 
 ---
 
-#### Prompt 8.2 🤖 GEMINI — BUILD
-*Tag: Desktop App Window Polish*
+#### Prompt 9.2 🤖 GEMINI — BUILD
+*Tag: Desktop Polish*
 
 ```
-Add desktop-specific polish to the Bracer Tauri app.
+Add desktop polish to Bracer Tauri app.
 
 1. Custom titlebar (apps/web/src/components/TitleBar.tsx):
-   Show only when running in Tauri (check window.__TAURI__)
-   - Draggable area with app name "Bracer" centered
-   - Window controls (minimize, maximize, close) on right — call Tauri window API
-   - Left side: current project name if inside a project
-   - Height: 40px, background: --bg-secondary
-   Remove default Tauri decorations in tauri.conf.json (decorations: false)
+   Only render when window.__TAURI__ exists.
+   - Draggable region: "Bracer" centered, current project name left
+   - Window controls right: minimize, maximize, close (call @tauri-apps/api/window)
+   - Height 40px, bg: --bg-secondary
+   Set decorations: false in tauri.conf.json.
 
 2. Keyboard shortcuts (apps/web/src/hooks/useKeyboardShortcuts.ts):
-   - Cmd/Ctrl + S → save current content / schema
-   - Cmd/Ctrl + N → new entry (focus first field in add form)
-   - Cmd/Ctrl + E → export JSON
-   - Cmd/Ctrl + , → open settings
-   - Escape → cancel edit mode in content editor
-   Show shortcut hints in tooltips on relevant buttons.
+   Cmd/Ctrl+S → save current form/schema
+   Cmd/Ctrl+N → new entry (focus first field)
+   Cmd/Ctrl+E → export JSON
+   Cmd/Ctrl+, → open settings
+   Escape → cancel edit mode
+   Show hints in button tooltips.
 
-3. App menu (src-tauri/src/main.rs):
-   File menu: New Project, Open Project, Export JSON, separator, Quit
-   Edit menu: standard (handled by OS)
-   View menu: Toggle Dark Mode, Toggle Sidebar
-   Help menu: About Bracer, GitHub, Buy Me a Coffee
+3. Tauri app menu (src-tauri/src/main.rs):
+   File: New Project, Open Project, Export JSON, separator, Quit
+   View: Toggle Dark Mode
+   Help: About Bracer, GitHub, Buy Me a Coffee
 ```
 
 ---
@@ -1238,222 +1132,192 @@ Add desktop-specific polish to the Bracer Tauri app.
 
 ---
 
-### PHASE 9 — Final Polish & Release Prep
-
----
-
-#### Prompt 9.1 🤖 CLAUDE — CRITICAL
-*Tag: JSON Export Accuracy + Edge Cases*
-
-```
-Be concise.
-
-Audit and harden the buildJSON function in packages/core/src/jsonBuilder.ts.
-
-Requirements:
-1. Root fields must appear in the exact order defined in schema.rootFields
-2. List fields must appear as arrays in the exact order defined in schema.listFields
-3. null values must export as JSON null (not undefined, not empty string)
-4. number-nullable fields: empty input exports as null
-5. toggle fields: must export as boolean true/false (not "true"/"false" strings)
-6. tags fields: must export as array of strings (empty = [])
-7. object-optional fields: if disabled/null, export as null. If enabled, export as nested object with all sub-fields
-8. Maintain the exact key names from schema field definitions (the JSON key, not the display label)
-
-Write comprehensive unit tests for buildJSON covering all field types and edge cases.
-Use vitest.
-
-Also audit inferSchemaFromJSON — ensure it correctly handles the naughty pack JSON structure provided (deeply nested follow_up object, nullable timer_seconds, mixed-value arrays in topic_tags).
-
-Output fixed functions and test file.
-```
-
----
-
-**[YOU]**
-- `pnpm test` — all tests must pass
-- Manually export the naughty pack JSON and compare with original
-- `git commit -m "fix: json export accuracy and unit tests"`
-
----
-
-#### Prompt 9.2 🤖 GEMINI — BUILD
-*Tag: Empty States, Loading States, Error States*
-
-```
-Add proper empty, loading, and error states throughout the Bracer app.
-
-1. Empty states (use a consistent EmptyState component):
-   File: apps/web/src/components/EmptyState.tsx
-   Props: icon (emoji or lucide icon), title, description, action?: {label, onClick}
-
-   Apply to:
-   - ProjectDashboard: no projects yet → "Create your first project"
-   - ProjectView: no schemas yet → "Define your first schema"
-   - ContentEditor: no entries yet → "Add your first entry above"
-   - ContentEditor search: no results → "No entries match your search"
-
-2. Loading states:
-   - Skeleton loaders for project cards (3 placeholder cards while loading from storage)
-   - Spinner overlay for Drive sync operations
-   - Inline "Saving..." text that replaces [Save Entry] button during save
-
-3. Error states:
-   - Drive sync error: inline error banner with retry button (not a modal)
-   - JSON import error: inline error below the import textarea with specific message
-   - Schema save error: inline below save button
-
-4. Toast notifications (lightweight, no library — build it):
-   File: apps/web/src/components/Toast.tsx
-   Position: bottom-right desktop, bottom center mobile
-   Types: success (green), error (red), info (blue)
-   Auto-dismiss after 3 seconds
-   Used for: entry saved, schema saved, export complete, sync complete
-
-Use lucide-react for icons (pnpm add lucide-react).
-```
-
----
-
-**[YOU]**
-- Review all empty states
-- Test Drive error by revoking token mid-sync
-- `git commit -m "feat: empty states, loading states, toasts"`
-
----
-
-#### Prompt 9.3 🤖 GEMINI — BUILD
-*Tag: Buy Me a Coffee + About + Branding*
-
-```
-Add final branding and attribution to Bracer.
-
-1. Update Settings page About section:
-   - App version pulled from package.json (import { version } from '../../../package.json')
-   - GitHub repo link: opens in browser (use Tauri shell.open on desktop, window.open on web)
-   - Buy Me a Coffee button: styled in yellow (#FFDD00), coffee cup emoji, text "Buy me a coffee"
-     Link: https://buymeacoffee.com (user will update with their own link)
-   - Tagline: "Bracer is free and open source. If it saves you time, a coffee keeps it going. ☕"
-   - Built with: React, Tauri, TypeScript
-
-2. App logo:
-   Create a simple SVG logo for Bracer:
-   - "PF" monogram or a simple box/pack icon
-   - Indigo (#6366f1) primary color
-   - Works on light and dark backgrounds
-   - Save as apps/web/public/logo.svg
-   - Use in top bar of dashboard and desktop titlebar
-
-3. Footer on web app only (not desktop):
-   Minimal: "Bracer · Open Source · Buy me a coffee ☕ · GitHub"
-   Muted text, centered, very small
-
-4. Update page <title> tags:
-   - Dashboard: "Bracer"
-   - Project: "ProjectName — Bracer"
-   - Schema Editor: "Edit Schema — Bracer"
-   - Content Editor: "SchemaName — Bracer"
-```
-
----
-
-**[YOU]**
-- Update Buy Me a Coffee link with your actual URL
-- `git commit -m "feat: branding, buy me a coffee, about page"`
-
----
-
-### PHASE 10 — Deployment & Release
+### PHASE 10 — Final Polish
 
 ---
 
 #### Prompt 10.1 🤖 CLAUDE — CRITICAL
-*Tag: CI/CD Pipeline*
+*Tag: JSON Export Accuracy + Unit Tests*
 
 ```
-Be concise.
+Be concise. Output fixed code and tests only.
 
-Set up GitHub Actions CI/CD for Bracer.
+Audit and harden buildJSON in packages/core/src/jsonBuilder.ts.
 
-File: .github/workflows/deploy.yml
+Requirements:
+1. Root fields output in exact order defined in schema.rootFields
+2. List fields output as arrays in exact order of schema.listFields
+3. null values export as JSON null (not undefined, not empty string)
+4. number-nullable: empty input → null
+5. toggle: exports as boolean (not string)
+6. tags: exports as string[] (empty → [])
+7. object-optional: disabled → null, enabled → nested object with all sub-fields
+8. Key names come from schema field name property (the JSON key), not label
 
-Jobs:
+Write vitest unit tests covering all field types and edge cases.
+Include a test using the exact naughty pack JSON structure (pack_id, name, description, ads_required, cards array with follow_up object-optional).
 
-1. test:
-   - Runs on every push and PR
-   - pnpm install
-   - pnpm test (vitest)
-   - pnpm build (web app)
-   - Fail PR if tests fail
-
-2. deploy-web:
-   - Runs on push to main only
-   - Builds apps/web/
-   - Deploys to Vercel using VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID secrets
-   - Posts deployment URL as PR comment
-
-3. build-desktop:
-   - Runs on push to main and on version tags (v*)
-   - Matrix: ubuntu-latest, macos-latest, windows-latest
-   - Builds Tauri app for each platform
-   - On version tags: creates GitHub Release and uploads installers as assets
-
-Also create .github/workflows/pr-check.yml:
-- Runs on all PRs
-- Checks TypeScript (tsc --noEmit)
-- Checks formatting (prettier --check)
-
-Add scripts to root package.json:
-  "build": "pnpm --filter ./apps/web build"
-  "test": "pnpm --filter ./packages/core test"
-  "typecheck": "tsc --noEmit"
+Also harden inferSchemaFromJSON:
+- Correctly handles nullable fields (timer_seconds: null)
+- Correctly identifies follow_up as object-optional
+- topic_tags correctly identified as tags type
 ```
 
 ---
 
 **[YOU]**
-- Add Vercel secrets to GitHub repo settings
-- Push to main — confirm web deploy works
-- `git commit -m "ci: github actions deploy pipeline"`
+- `pnpm test` — all pass
+- Export naughty pack JSON, diff with original
+- `git commit -m "fix: json export accuracy and tests"`
 
 ---
 
-**[YOU — Manual Steps for Desktop Release]**
+#### Prompt 10.2 🤖 GEMINI — BUILD
+*Tag: Empty States + Toasts + Branding*
 
-To release a new desktop version:
+```
+Final polish for Bracer.
+
+1. EmptyState component (apps/web/src/components/EmptyState.tsx):
+   Props: icon, title, description, action?: {label, onClick}
+   Apply to:
+   - Dashboard: no projects → "Create your first project"
+   - ProjectView: no schemas → "Define your first schema"
+   - ContentEditor: no entries → "Add your first entry above"
+   - ContentEditor search: no results → "No entries match your search"
+
+2. Toast system (apps/web/src/components/Toast.tsx):
+   No library. Build lightweight.
+   Position: bottom-right desktop, bottom-center mobile
+   Types: success (green), error (red), info (blue)
+   Auto-dismiss 3 seconds, manual close
+   Use for: entry saved, schema saved, export complete, sync complete, sync error
+
+3. Loading states:
+   - Skeleton loaders for project cards (3 placeholder cards)
+   - Spinner overlay during Drive/GitHub sync
+   - "Saving..." text replaces [Save Entry] during save
+
+4. Branding:
+   SVG logo: simple "B" mark or bracket icon, indigo, works light+dark
+   Save as apps/web/public/logo.svg
+   Use in dashboard top bar and desktop titlebar
+
+   Page titles:
+   Dashboard: "Bracer"
+   Project: "ProjectName — Bracer"
+   Schema: "Edit Schema — Bracer"
+   Content: "SchemaName — Bracer"
+
+   Web footer only:
+   "Bracer · Open Source · ☕ Buy me a coffee · GitHub"
+   Muted, small, centered
+
+5. Settings About section:
+   Version from package.json
+   Buy Me a Coffee: yellow button, link to https://buymeacoffee.com/YOUR_LINK
+   Text: "Bracer is free and open source. If it saves you time, a coffee keeps it going. ☕"
+
+Install lucide-react for icons if not already installed.
+```
+
+---
+
+**[YOU]**
+- Update Buy Me a Coffee link with your real URL
+- `git commit -m "feat: empty states, toasts, branding"`
+
+---
+
+### PHASE 11 — CI/CD & Release
+
+---
+
+#### Prompt 11.1 🤖 CLAUDE — CRITICAL
+*Tag: GitHub Actions Pipeline*
+
+```
+Be concise. Output workflow files only.
+
+Set up GitHub Actions CI/CD for Bracer.
+
+.github/workflows/ci.yml:
+Triggers: push and PR to main
+Jobs:
+  typecheck: tsc --noEmit
+  test: pnpm test (vitest in packages/core)
+  build: pnpm build (apps/web)
+Fail PR if any job fails.
+
+.github/workflows/deploy.yml:
+Triggers: push to main only
+Jobs:
+  deploy-web:
+    Build apps/web
+    Deploy to Vercel using secrets: VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID
+
+.github/workflows/release.yml:
+Triggers: push of version tags (v*)
+Jobs:
+  build-desktop:
+    Matrix: ubuntu-latest, macos-latest, windows-latest
+    Each: checkout, install Rust, pnpm install, pnpm build (web), pnpm tauri build
+    Upload build artifacts
+  create-release:
+    Needs: build-desktop
+    Creates GitHub Release with tag name
+    Attaches all platform installers as release assets
+
+Root package.json scripts:
+  "build": "pnpm --filter ./apps/web build"
+  "test": "pnpm --filter ./packages/core test"
+  "typecheck": "tsc -p apps/web/tsconfig.json --noEmit"
+```
+
+---
+
+**[YOU]** After Prompt 11.1:
+- Add secrets to GitHub repo: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `GITHUB_CLIENT_SECRET`
+- Push to main — confirm web deploys to Vercel
+- `git commit -m "ci: github actions pipeline"`
+
+**[YOU] — To release desktop app:**
 ```bash
 git tag v0.1.0
 git push origin v0.1.0
 ```
-GitHub Actions will build installers for Mac, Windows, Linux and attach them to a GitHub Release automatically.
+GitHub Actions builds Mac, Windows, Linux installers and attaches to a GitHub Release automatically.
 
 ---
 
 ## 6. Release Checklist
 
-### Before First Public Release
+### Pre-Release
 
-- [ ] Web app deployed to Vercel and accessible
-- [ ] Custom domain set up (optional: bracer.app or bracer.vercel.app)
+- [ ] Web app live on Vercel
+- [ ] Custom domain configured (optional)
 - [ ] Desktop builds tested on Mac and Windows
-- [ ] Google OAuth consent screen verified (add your production domain)
+- [ ] Google OAuth consent screen approved for production domain
+- [ ] GitHub OAuth app updated with production callback URL
+- [ ] Vercel env vars set: `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `VITE_GOOGLE_CLIENT_ID`, `VITE_GITHUB_CLIENT_ID`
 - [ ] All unit tests passing
 - [ ] Dark mode tested on every screen
-- [ ] Mobile layout tested on real device (iPhone and Android)
-- [ ] JSON export tested with real data — compare byte-for-byte with original
-- [ ] Drive sync tested with two different browsers simultaneously
-- [ ] Conflict resolution tested manually
-- [ ] Buy Me a Coffee link updated with real URL
-- [ ] GitHub repo README is complete
-- [ ] Open source license confirmed (MIT)
+- [ ] Mobile tested on real device
+- [ ] JSON export verified byte-for-byte against original
+- [ ] Drive sync tested across two browsers
+- [ ] GitHub sync tested — commits appear in target repo
+- [ ] Conflict resolution tested for both Drive and GitHub
+- [ ] Buy Me a Coffee link updated
+- [ ] README complete
+- [ ] MIT license in repo
 
-### Launch Channels
+### Launch
 
-- [ ] Post on Reddit: r/SideProject, r/webdev, r/indiegaming, r/gamedev
-- [ ] Post on Product Hunt
-- [ ] Post on Hacker News (Show HN)
-- [ ] Share on X/Twitter with a short demo GIF (record with Loom or ScreenToGif)
-- [ ] Add to awesome-lists on GitHub related to game dev tools and JSON tools
+- [ ] Reddit: r/SideProject, r/webdev, r/indiegaming, r/gamedev
+- [ ] Product Hunt
+- [ ] Hacker News (Show HN)
+- [ ] X/Twitter with demo GIF
+- [ ] Add to relevant awesome-lists on GitHub
 
 ---
 
@@ -1476,24 +1340,25 @@ Define your data structure once. Fill it in with a clean form. Export perfect JS
 
 ## What is Bracer?
 
-If your app or game runs on JSON data packs — card games, quiz apps, flashcard sets, dialogue trees, item databases — Bracer gives you and your team a clean UI to create and manage that content without touching code.
+If your app or game runs on JSON data packs — card games, quiz apps, flashcard sets, dialogue trees, item databases — Bracer gives you a clean UI to create and manage that content without touching code.
 
 ## Features
 
-- **Schema-first** — define your JSON structure visually or paste an example and let Bracer detect it
-- **Fast content entry** — conveyor belt form: fill, save, instantly ready for the next entry
-- **Google Drive sync** — optional. Save your projects to Drive and access them from any device
-- **Works everywhere** — web app, desktop app (Mac/Windows/Linux), mobile browser PWA
-- **No account required** — guest mode with local storage, just works
-- **Open source** — MIT license, host it yourself if you want
+- **Schema-first** — paste an example JSON or define fields manually
+- **Fast content entry** — conveyor belt form: save, instantly ready for next entry
+- **Google Drive sync** — for non-technical users and cross-device access
+- **GitHub sync** — for developers: commits your JSON directly into your repo with full version history
+- **Works everywhere** — web app, desktop (Mac/Windows/Linux), mobile PWA
+- **No account required** — local mode works offline, no sign-in needed
+- **Open source** — MIT, host it yourself
 
 ## Getting Started
 
 ### Web App
-Visit [bracer.vercel.app](https://bracer.vercel.app) — no install needed.
+[bracer.vercel.app](https://bracer.vercel.app) — no install.
 
-### Desktop App
-Download the latest release for your platform from [Releases](https://github.com/YOUR_USERNAME/bracer/releases).
+### Desktop
+[Download latest release](https://github.com/YOUR_USERNAME/bracer/releases)
 
 ### Self-host
 ```bash
@@ -1504,17 +1369,16 @@ pnpm install && pnpm dev
 
 ## Development
 
-See [PACKFORGE_MASTER_PLAN.md](./PACKFORGE_MASTER_PLAN.md) for the full build plan.
+See [BRACER_MASTER_PLAN.md](./BRACER_MASTER_PLAN.md) for full build plan.
 
 ```bash
 pnpm install
-pnpm dev          # web app on localhost:5173
-pnpm test         # run unit tests
-pnpm build        # production build
+pnpm dev
+pnpm test
+pnpm build
 ```
 
 ## License
-
 MIT © [Your Name]
 ```
 
@@ -1528,23 +1392,20 @@ MIT © [Your Name]
 React 18 + TypeScript + Vite + Tailwind CSS + Zustand
 
 ## Dev
-
 ```bash
-pnpm install
-pnpm dev
+pnpm install && pnpm dev
 ```
 
 ## Env
-
 ```
-VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
+VITE_GOOGLE_CLIENT_ID=
+VITE_GITHUB_CLIENT_ID=
+VITE_GITHUB_REDIRECT_URI=http://localhost:5173/auth/github/callback
 ```
 
 ## Build
-
 ```bash
-pnpm build
-# Output in dist/
+pnpm build   # output: dist/
 ```
 ```
 
@@ -1553,36 +1414,26 @@ pnpm build
 ### apps/desktop/README.md
 
 ```markdown
-# Bracer — Desktop App
-
-Tauri v2 wrapper around the web app.
+# Bracer — Desktop (Tauri v2)
 
 ## Requirements
-
-- Rust (install via rustup)
-- Node.js 18+
-- pnpm
+- Rust (via rustup)
+- Node.js 18+ and pnpm
 
 ## Dev
-
 ```bash
-# Build web app first
 cd ../web && pnpm build
-
-# Then run Tauri dev
-cd ../desktop
-pnpm tauri dev
+cd ../desktop && pnpm tauri dev
 ```
 
-## Build Installers
-
+## Build
 ```bash
 pnpm tauri build
-# Output in src-tauri/target/release/bundle/
+# Output: src-tauri/target/release/bundle/
 ```
 ```
 
 ---
 
-*Bracer Master Plan — v1.0*
-*Keep it simple. Keep it fast. Ship it.*
+*Bracer Master Plan — v2.0*
+*Two sync backends. One clean tool. Ship it.*
