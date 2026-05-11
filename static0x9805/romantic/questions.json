@@ -240,6 +240,154 @@
             "timer_seconds": null,
             "auto_start_timer": false,
             "follow_up": null
+        },
+        {
+            "id": "rom_d_011",
+            "type": "truth",
+            "content": "{player}, what's one small thing {partner} does that makes you fall for them all over again?",
+            "level": 1,
+            "topic_tags": [
+                "affection",
+                "connection",
+                "feelings"
+            ],
+            "repeatable": true,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "rom_d_011_fu",
+                "content": "{partner}, did you know that about yourself?",
+                "trigger_probability": 0.7,
+                "timer_expired_text": null,
+                "vibe": "love"
+            }
+        },
+        {
+            "id": "rom_d_012",
+            "type": "dare",
+            "content": "Take {partner}'s hand, trace each finger slowly, and say one word for each that describes how they make you feel.",
+            "level": 2,
+            "topic_tags": [
+                "physical touch",
+                "words of affirmation",
+                "connection"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": null
+        },
+        {
+            "id": "rom_d_013",
+            "type": "truth",
+            "content": "{nickname}, when was the exact moment you knew {partner} was different from everyone else?",
+            "level": 2,
+            "topic_tags": [
+                "nostalgia",
+                "vulnerability",
+                "connection"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "rom_d_013_fu",
+                "content": "{partner}, where were you at that exact moment? Do you remember it too?",
+                "trigger_probability": 0.8,
+                "timer_expired_text": null,
+                "vibe": "love"
+            }
+        },
+        {
+            "id": "rom_d_014",
+            "type": "dare",
+            "content": "Rest your head on {partner}'s shoulder for the next 60 seconds. No talking — just be there.",
+            "level": 1,
+            "topic_tags": [
+                "physical touch",
+                "stillness",
+                "connection"
+            ],
+            "repeatable": true,
+            "gender": "any",
+            "timer_seconds": 60,
+            "auto_start_timer": true,
+            "follow_up": {
+                "id": "rom_d_014_fu",
+                "content": "What went through your mind during that silence?",
+                "trigger_probability": 0.6,
+                "timer_expired_text": "Time's up — you can lift your head. Or don't.",
+                "vibe": "love"
+            }
+        },
+        {
+            "id": "rom_d_015",
+            "type": "truth",
+            "content": "{player}, what's something {partner} has never had to say out loud — but you already know they feel it?",
+            "level": 3,
+            "topic_tags": [
+                "vulnerability",
+                "emotional intimacy",
+                "feelings"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "rom_d_015_fu",
+                "content": "{partner}, is {player} right?",
+                "trigger_probability": 1.0,
+                "timer_expired_text": null,
+                "vibe": "love"
+            }
+        },
+        {
+            "id": "rom_d_016",
+            "type": "truth",
+            "content": "{player}, what's something {partner} has never had to say out loud — but you already know they feel it?",
+            "level": 3,
+            "topic_tags": [
+                "vulnerability",
+                "emotional intimacy",
+                "feelings"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "rom_d_016_fu",
+                "content": "{partner}, is {player} right?",
+                "trigger_probability": 1.0,
+                "timer_expired_text": null,
+                "vibe": "love"
+            }
+        },
+        {
+            "id": "rom_d_017",
+            "type": "truth",
+            "content": "{player}, what's something {partner} has never had to say out loud — but you already know they feel it?",
+            "level": 3,
+            "topic_tags": [
+                "vulnerability",
+                "emotional intimacy",
+                "feelings"
+            ],
+            "repeatable": false,
+            "gender": "any",
+            "timer_seconds": null,
+            "auto_start_timer": false,
+            "follow_up": {
+                "id": "rom_d_017_fu",
+                "content": "{partner}, is {player} right?",
+                "trigger_probability": 1.0,
+                "timer_expired_text": null,
+                "vibe": "love"
+            }
         }
     ]
 }
